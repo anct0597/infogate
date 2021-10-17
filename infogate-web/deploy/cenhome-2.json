@@ -1,0 +1,53 @@
+{
+  "thread": 1,
+  "status": 1,
+  "pageModel": {
+    "targetUrls": [
+      "https://cenhomes.vn/du-an/[a-zA-Z-0-9]+"
+    ],
+    "ignoreUrls": [],
+    "startUrls": [
+      "https://cenhomes.vn/du-an/chung-cu-cao-tang-ho-sinh-thai-dam-dong-da-phu-tai-residence-10000351"
+    ],
+    "pipelines": [
+      "vn.infogate.web.pipeline.CenHomeModelGatherPipeline"
+    ],
+    "pageProcessor": "vn.infogate.web.processors.CenHomePageProcessor",
+    "fields": [
+      {
+        "name": "title",
+        "expr": "//*[@class='page-title']/text()",
+        "required": true
+      },
+      {
+        "name": "location",
+        "expr": "//*[@class='location']/text()"
+      },
+      {
+        "name": "unit_price",
+        "expr": "//*[@class='unit-price']/span[1]/text()"
+      },
+      {
+        "name": "range_price",
+        "expr": "//*[@class='price']/text()"
+      },
+      {
+        "name": "property_type",
+        "expr": "//*[@id='information-tab']/p[6]/span/text()"
+      },
+      {
+        "name": "investor",
+        "expr": "//*[@id='information-tab']/p[1]/span/text()"
+      },
+      {
+        "name": "images",
+        "expr": "//*[@class='itemthumb']/img/@data-src",
+        "multi": true
+      },
+      {
+        "name": "range_area",
+        "expr": "//*[@id='information-tab']/p[7]/span/text()"
+      }
+    ]
+  }
+}

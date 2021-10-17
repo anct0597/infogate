@@ -10,17 +10,16 @@ import java.lang.reflect.Method;
 
 /**
  * Wrapper of field and extractor.
- * @author code4crafter@gmail.com <br>
- * @since 0.2.0
+ *
+ * @author anct.
  */
 @Getter
 @Setter
+@SuppressWarnings("rawtypes")
 public class FieldExtractor extends Extractor {
 
     private final Field field;
-
     private Method setterMethod;
-
     private ObjectFormatter objectFormatter;
 
     public FieldExtractor(Field field,

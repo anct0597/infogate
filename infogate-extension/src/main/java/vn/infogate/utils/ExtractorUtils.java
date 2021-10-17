@@ -1,28 +1,21 @@
 package vn.infogate.utils;
 
+import vn.infogate.model.Extractor;
 import vn.infogate.model.annotation.ExtractBy;
-import vn.infogate.selector.CssSelector;
-import vn.infogate.selector.JsonPathSelector;
-import vn.infogate.selector.RegexSelector;
-import vn.infogate.selector.Selector;
-import vn.infogate.selector.XpathSelector;
+import vn.infogate.selector.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * Tools for annotation converting. <br>
- *
- * @author code4crafter@gmail.com <br>
- * @since 0.2.1
+ * @author anct.
  */
 public class ExtractorUtils {
 
-    public static Selector getSelector(ExtractBy extractBy) {
-        String value = extractBy.value();
+    public static Selector getSelector(String value, Extractor.Type type) {
         Selector selector;
-        switch (extractBy.type()) {
+        switch (type) {
             case Css:
                 selector = new CssSelector(value);
                 break;
@@ -36,6 +29,10 @@ public class ExtractorUtils {
                 selector = new XpathSelector(value);
         }
         return selector;
+    }
+
+    public static Selector getSelector(ExtractBy extractBy) {
+        return getSelector(extractBy.value(), extractBy.type());
     }
 
     public static List<Selector> getSelectors(ExtractBy[] extractByArr) {

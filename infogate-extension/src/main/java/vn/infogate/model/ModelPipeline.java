@@ -20,14 +20,14 @@ import java.util.concurrent.ConcurrentHashMap;
 @SuppressWarnings({"rawtypes","unchecked"})
 public class ModelPipeline implements Pipeline {
 
-    private final Map<Class<?>, PageModelPipeline> pageModelPipelines = new ConcurrentHashMap<>();
+    private final Map<Class<?>, PageModelPipeline> pageModelPipelines;
 
     public ModelPipeline() {
+        this.pageModelPipelines = new ConcurrentHashMap<>(1);
     }
 
-    public ModelPipeline put(Class<?> clazz, PageModelPipeline pageModelPipeline) {
+    public void put(Class<?> clazz, PageModelPipeline pageModelPipeline) {
         pageModelPipelines.put(clazz, pageModelPipeline);
-        return this;
     }
 
     @Override

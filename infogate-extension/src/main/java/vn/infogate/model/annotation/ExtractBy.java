@@ -1,5 +1,7 @@
 package vn.infogate.model.annotation;
 
+import vn.infogate.model.Extractor;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -23,16 +25,11 @@ public @interface ExtractBy {
     String value();
 
     /**
-     * types of extractor expressions
-     */
-    enum Type {XPath, Regex, Css, JsonPath}
-
-    /**
      * Extractor type, support XPath, CSS Selector and regex.
      *
      * @return extractor type
      */
-    Type type() default Type.XPath;
+    Extractor.Type type() default Extractor.Type.XPath;
 
     /**
      * Define whether the field can be null.<br>

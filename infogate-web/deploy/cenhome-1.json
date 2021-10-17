@@ -1,0 +1,75 @@
+{
+  "thread": 1,
+  "status": 0,
+  "pageModel": {
+    "targetUrls": [
+      "https://cenhomes.vn/mua-nha/[a-zA-Z-0-9]+",
+      "https://cenhomes.vn/thue-nha/[a-zA-Z-0-9]+"
+    ],
+    "ignoreUrls": [],
+    "startUrls": [
+      "https://cenhomes.vn/mua-nha/chinh-chu-ban-nha-le-quang-dao-my-dinh-nam-tu-liem-view-ho-gara-7-cho-o-to-tranh-10294912"
+    ],
+    "pipelines": [
+      "vn.infogate.web.pipeline.CenHomeModelGatherPipeline"
+    ],
+    "pageProcessor": "vn.infogate.web.processors.CenHomePageProcessor",
+    "fields": [
+      {
+        "name": "title",
+        "expr": "//*[@class='page-title']/text()",
+        "required": true
+      },
+      {
+        "name": "phone",
+        "expr": "//*[@class='btn-phone']/@data-phone",
+        "required": true
+      },
+      {
+        "name": "area",
+        "expr": "//*[@class='icon-area']/text()"
+      },
+      {
+        "name": "bedroom",
+        "expr": "//*[@class='icon-bedroom']/text()"
+      },
+      {
+        "name": "bathroom",
+        "expr": "//*[@class='icon-bathroom']/text()"
+      },
+      {
+        "name": "direction",
+        "expr": "//*[@class='icon-direction']/text()"
+      },
+      {
+        "name": "location",
+        "expr": "//*[@class='location']/text()"
+      },
+      {
+        "name": "unit_price",
+        "expr": "//*[@class='unit-price']/span[1]/text()"
+      },
+      {
+        "name": "total_price",
+        "expr": "//*[@class='total-price']/text()"
+      },
+      {
+        "name": "property_type",
+        "expr": "//*[@class='properties']/div[1]/p[1]/span/text()"
+      },
+      {
+        "name": "equipments",
+        "expr": "//*[@class='properties']/div[2]/p[4]/span/text()"
+      },
+      {
+        "name": "legal_status",
+        "expr": "//*[@class='properties']/div[2]/p[5]/span/text()"
+      },
+      {
+        "name": "images",
+        "expr": "//*[@class='itemthumb']/img/@data-src",
+        "multi": true
+      }
+    ]
+  }
+}

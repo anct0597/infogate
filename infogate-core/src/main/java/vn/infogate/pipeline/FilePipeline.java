@@ -33,9 +33,9 @@ public class FilePipeline extends FilePersistentBase implements Pipeline {
         var file = getFile(path + DigestUtils.md5Hex(resultItems.getRequest().getUrl()) + ".html");
         try (var printWriter = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8))) {
             printWriter.println("url:\t" + resultItems.getRequest().getUrl());
-            for (Map.Entry<String, Object> entry : resultItems.getAll().entrySet()) {
+            for (Map.Entry<String, Object> entry : resultItems.getFields().entrySet()) {
                 if (entry.getValue() instanceof Iterable) {
-                    var iterable = (Iterable)entry.getValue();
+                    var iterable = (Iterable) entry.getValue();
                     printWriter.println(entry.getKey() + ":");
                     for (Object o : iterable) {
                         printWriter.println(o);

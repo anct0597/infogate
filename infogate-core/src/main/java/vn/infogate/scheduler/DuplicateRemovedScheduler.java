@@ -39,6 +39,5 @@ public abstract class DuplicateRemovedScheduler implements Scheduler {
         return HttpConstant.Method.POST.equalsIgnoreCase(request.getMethod());
     }
 
-    protected void pushWhenNoDuplicate(Request request, Task task) {
-    }
+    protected abstract void pushWhenNoDuplicate(Request request, Task task);
 }

@@ -5,22 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import vn.infogate.Page;
-import vn.infogate.model.annotation.ComboExtract;
-import vn.infogate.model.annotation.ExtractBy;
-import vn.infogate.model.annotation.ExtractByUrl;
-import vn.infogate.model.annotation.HelpUrl;
-import vn.infogate.model.annotation.TargetUrl;
+import vn.infogate.model.annotation.*;
 import vn.infogate.model.formatter.ObjectFormatter;
 import vn.infogate.model.formatter.ObjectFormatterBuilder;
-import vn.infogate.selector.AndSelector;
-import vn.infogate.selector.OrSelector;
-import vn.infogate.selector.RegexSelector;
-import vn.infogate.selector.Selector;
-import vn.infogate.selector.XpathSelector;
+import vn.infogate.selector.*;
 import vn.infogate.utils.ClassUtils;
 import vn.infogate.utils.ExtractorUtils;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -34,21 +25,25 @@ import static vn.infogate.model.annotation.ExtractBy.Source.RawText;
 /**
  * The main internal logic of page model extractor.
  *
- * @author code4crafter@gmail.com <br>
- * @since 0.2.0
+ * @author anct.
+ * @version 1.0
  */
 @Slf4j
 @Getter
 public class PageModelExtractor {
 
     private Class<?> clazz;
-    private Selector targetUrlRegionSelector;
-    private Selector helpUrlRegionSelector;
-    private List<FieldExtractor> fieldExtractors;
     private Extractor objectExtractor;
-    private final List<Pattern> targetUrlPatterns = new ArrayList<>();
-    private final List<Pattern> helpUrlPatterns = new ArrayList<>();
+    private Selector targetUrlRegionSelector;
+    private final List<FieldExtractor> fieldExtractors;
+    private final List<Pattern> targetUrlPatterns;
+    private final List<Pattern> ignoredPatterns;
 
+    private PageModelExtractor() {
+        this.targetUrlPatterns = new ArrayList<>(5);
+        this.ignoredPatterns = new ArrayList<>(1);
+        this.fieldExtractors = new ArrayList<>();
+    }
 
     public static PageModelExtractor create(Class<?> clazz) {
         var pageModelExtractor = new PageModelExtractor();
@@ -56,25 +51,18 @@ public class PageModelExtractor {
         return pageModelExtractor;
     }
 
+    /**
+     * Init class extractor, url patterns, field extractor.
+     *
+     * @param clazz class.
+     */
     private void init(Class<?> clazz) {
         this.clazz = clazz;
         initClassExtractors();
-        fieldExtractors = new ArrayList<>();
         for (Field field : ClassUtils.getFieldsIncludeSuperClass(clazz)) {
             field.setAccessible(true);
-            FieldExtractor fieldExtractor = getAnnotationExtractBy(clazz, field);
-            FieldExtractor fieldExtractorTmp = getAnnotationExtractCombo(clazz, field);
-            if (fieldExtractor != null && fieldExtractorTmp != null) {
-                throw new IllegalStateException("Only one of 'ExtractBy ComboExtract ExtractByUrl' can be added to a field!");
-            } else if (fieldExtractor == null && fieldExtractorTmp != null) {
-                fieldExtractor = fieldExtractorTmp;
-            }
-            fieldExtractorTmp = getAnnotationExtractByUrl(clazz, field);
-            if (fieldExtractor != null && fieldExtractorTmp != null) {
-                throw new IllegalStateException("Only one of 'ExtractBy ComboExtract ExtractByUrl' can be added to a field!");
-            } else if (fieldExtractor == null && fieldExtractorTmp != null) {
-                fieldExtractor = fieldExtractorTmp;
-            }
+            validateAnnotationOnField(field);
+            var fieldExtractor = getFieldExtractor(field);
             if (fieldExtractor != null) {
                 fieldExtractor.setObjectFormatter(new ObjectFormatterBuilder().setField(field).build());
                 fieldExtractors.add(fieldExtractor);
@@ -82,76 +70,98 @@ public class PageModelExtractor {
         }
     }
 
+    private FieldExtractor getFieldExtractor(Field field) {
+        var fieldExtractor = getAnnotationExtractBy(clazz, field);
+        if (fieldExtractor == null) fieldExtractor = getAnnotationExtractCombo(clazz, field);
+        if (fieldExtractor == null) fieldExtractor = getAnnotationExtractByUrl(clazz, field);
+        return fieldExtractor;
+    }
+
+    private void validateAnnotationOnField(Field field) {
+        if (field.isAnnotationPresent(ComboExtract.class) && field.isAnnotationPresent(ExtractBy.class)) {
+            throw new IllegalStateException("Only one of 'ExtractBy ComboExtract ExtractByUrl' can be added to a field!");
+        }
+        if (field.isAnnotationPresent(ComboExtract.class) && field.isAnnotationPresent(ExtractByUrl.class)) {
+            throw new IllegalStateException("Only one of 'ExtractBy ComboExtract ExtractByUrl' can be added to a field!");
+        }
+        if (field.isAnnotationPresent(ExtractBy.class) && field.isAnnotationPresent(ExtractByUrl.class)) {
+            throw new IllegalStateException("Only one of 'ExtractBy ComboExtract ExtractByUrl' can be added to a field!");
+        }
+    }
+
     private FieldExtractor getAnnotationExtractByUrl(Class<?> clazz, Field field) {
-        FieldExtractor fieldExtractor = null;
         ExtractByUrl extractByUrl = field.getAnnotation(ExtractByUrl.class);
-        if (extractByUrl != null) {
-            String regexPattern = extractByUrl.value();
-            if (regexPattern.trim().equals("")) {
-                regexPattern = ".*";
-            }
-            fieldExtractor = new FieldExtractor(field,
-                    new RegexSelector(regexPattern), FieldExtractor.Source.Url,
-                    extractByUrl.notNull(), List.class.isAssignableFrom(field.getType()));
-            Method setterMethod = getSetterMethod(clazz, field);
-            if (setterMethod != null) {
-                fieldExtractor.setSetterMethod(setterMethod);
-            }
+        if (extractByUrl == null) return null;
+        String regexPattern = extractByUrl.value();
+        if (StringUtils.isEmpty(regexPattern)) {
+            regexPattern = ".*";
+        }
+        var fieldExtractor = new FieldExtractor(field, new RegexSelector(regexPattern), FieldExtractor.Source.Url,
+                extractByUrl.notNull(), List.class.isAssignableFrom(field.getType()));
+        Method setterMethod = getSetterMethod(clazz, field);
+        if (setterMethod != null) {
+            fieldExtractor.setSetterMethod(setterMethod);
         }
         return fieldExtractor;
     }
 
     private FieldExtractor getAnnotationExtractCombo(Class<?> clazz, Field field) {
-        FieldExtractor fieldExtractor = null;
         ComboExtract comboExtract = field.getAnnotation(ComboExtract.class);
-        if (comboExtract != null) {
-            ExtractBy[] extractByArr = comboExtract.value();
-            Selector selector = comboExtract.op() == ComboExtract.Op.Or
-                    ? new OrSelector(ExtractorUtils.getSelectors(extractByArr))
-                    : new AndSelector(ExtractorUtils.getSelectors(extractByArr));
-            fieldExtractor = new FieldExtractor(field, selector,
-                    comboExtract.source() == ComboExtract.Source.RawHtml ? FieldExtractor.Source.RawHtml : FieldExtractor.Source.Html,
-                    comboExtract.notNull(), List.class.isAssignableFrom(field.getType()));
-            Method setterMethod = getSetterMethod(clazz, field);
-            if (setterMethod != null) {
-                fieldExtractor.setSetterMethod(setterMethod);
-            }
+        if (comboExtract == null) return null;
+
+        ExtractBy[] extractByArr = comboExtract.value();
+        Selector selector = comboExtract.op() == ComboExtract.Op.Or
+                ? new OrSelector(ExtractorUtils.getSelectors(extractByArr))
+                : new AndSelector(ExtractorUtils.getSelectors(extractByArr));
+
+        var fieldExtractor = new FieldExtractor(field, selector,
+                comboExtract.source() == ComboExtract.Source.RawHtml ? FieldExtractor.Source.RawHtml : FieldExtractor.Source.Html,
+                comboExtract.notNull(), List.class.isAssignableFrom(field.getType()));
+        Method setterMethod = getSetterMethod(clazz, field);
+        if (setterMethod != null) {
+            fieldExtractor.setSetterMethod(setterMethod);
         }
         return fieldExtractor;
     }
 
+    /**
+     * Get field extractor by annotation.
+     */
     private FieldExtractor getAnnotationExtractBy(Class<?> clazz, Field field) {
-        FieldExtractor fieldExtractor = null;
         ExtractBy extractBy = field.getAnnotation(ExtractBy.class);
-        if (extractBy != null) {
-            Selector selector = ExtractorUtils.getSelector(extractBy);
-            ExtractBy.Source source0 = extractBy.source();
-            if (extractBy.type() == ExtractBy.Type.JsonPath) {
-                source0 = RawText;
-            }
-            FieldExtractor.Source source;
-            switch (source0) {
-                case RawText:
-                    source = FieldExtractor.Source.RawText;
-                    break;
-                case RawHtml:
-                    source = FieldExtractor.Source.RawHtml;
-                    break;
-                default:
-                    source = FieldExtractor.Source.Html;
+        if (extractBy == null) return null;
 
-            }
-
-            fieldExtractor = new FieldExtractor(field, selector, source,
-                    extractBy.notNull(), List.class.isAssignableFrom(field.getType()));
-            fieldExtractor.setSetterMethod(getSetterMethod(clazz, field));
+        Selector selector = ExtractorUtils.getSelector(extractBy);
+        ExtractBy.Source sourceType = extractBy.source();
+        if (extractBy.type() == Extractor.Type.JsonPath) {
+            sourceType = RawText;
         }
+        FieldExtractor.Source source;
+        switch (sourceType) {
+            case RawText:
+                source = FieldExtractor.Source.RawText;
+                break;
+            case RawHtml:
+                source = FieldExtractor.Source.RawHtml;
+                break;
+            default:
+                source = FieldExtractor.Source.Html;
+
+        }
+
+        var fieldExtractor = new FieldExtractor(field, selector, source,
+                extractBy.notNull(), List.class.isAssignableFrom(field.getType()));
+        fieldExtractor.setSetterMethod(getSetterMethod(clazz, field));
         return fieldExtractor;
     }
 
-    public static Method getSetterMethod(Class<?> clazz, Field field) {
-        String name = "set" + StringUtils.capitalize(field.getName());
+    /**
+     * Get setter method for field.
+     * TODO: Should rewrite with lambada factory.
+     */
+    public Method getSetterMethod(Class<?> clazz, Field field) {
         try {
+            String name = "set" + StringUtils.capitalize(field.getName());
             Method declaredMethod = clazz.getDeclaredMethod(name, field.getType());
             declaredMethod.setAccessible(true);
             return declaredMethod;
@@ -161,37 +171,49 @@ public class PageModelExtractor {
     }
 
     private void initClassExtractors() {
-        Annotation annotation = clazz.getAnnotation(TargetUrl.class);
-        if (annotation == null) {
-            targetUrlPatterns.add(Pattern.compile(".*"));
-        } else {
-            TargetUrl targetUrl = (TargetUrl) annotation;
-            String[] value = targetUrl.value();
-            for (String s : value) {
-                targetUrlPatterns.add(Pattern.compile(s.replace(".", "\\.").replace("*", "[^\"'#]*")));
+        initTargetUrl();
+        initIgnoreUrl();
+//        annotation = clazz.getAnnotation(ExtractBy.class);
+//        if (annotation != null) {
+//            ExtractBy extractBy = (ExtractBy) annotation;
+//            objectExtractor = new Extractor(new XpathSelector(extractBy.value()), Extractor.Source.Html, extractBy.notNull(), false); //TODO: ??
+//        }
+    }
+
+    /**
+     * Url will be ignored if necessary.
+     */
+    private void initIgnoreUrl() {
+        var ignoreUrl = clazz.getAnnotation(IgnoreUrl.class);
+        if (ignoreUrl != null) {
+            for (var pattern : ignoreUrl.value()) {
+                ignoredPatterns.add(Pattern.compile(pattern.replace(".", "\\.").replace("*", "[^\"'#]*")));
             }
-            if (!targetUrl.sourceRegion().equals("")) {
-                targetUrlRegionSelector = new XpathSelector(targetUrl.sourceRegion());
-            }
-        }
-        annotation = clazz.getAnnotation(HelpUrl.class);
-        if (annotation != null) {
-            HelpUrl helpUrl = (HelpUrl) annotation;
-            String[] value = helpUrl.value();
-            for (String s : value) {
-                helpUrlPatterns.add(Pattern.compile(s.replace(".", "\\.").replace("*", "[^\"'#]*")));
-            }
-            if (!helpUrl.sourceRegion().equals("")) {
-                helpUrlRegionSelector = new XpathSelector(helpUrl.sourceRegion());
-            }
-        }
-        annotation = clazz.getAnnotation(ExtractBy.class);
-        if (annotation != null) {
-            ExtractBy extractBy = (ExtractBy) annotation;
-            objectExtractor = new Extractor(new XpathSelector(extractBy.value()), Extractor.Source.Html, extractBy.notNull(), false); //TODO: ??
         }
     }
 
+    /**
+     * Get target url will be crawled and store.
+     */
+    private void initTargetUrl() {
+        var targetUrl = clazz.getAnnotation(TargetUrl.class);
+        if (targetUrl == null) {
+            targetUrlPatterns.add(Pattern.compile(".*"));
+            return;
+        }
+        for (var pattern : targetUrl.value()) {
+            targetUrlPatterns.add(Pattern.compile(pattern.replace(".", "\\.").replace("*", "[^\"'#]*")));
+        }
+        if (StringUtils.isNotEmpty(targetUrl.sourceRegion())) {
+            targetUrlRegionSelector = new XpathSelector(targetUrl.sourceRegion());
+        }
+    }
+
+    /**
+     * Main process page.
+     *
+     * @param page page.
+     */
     public Object process(Page page) {
         boolean matched = false;
         for (Pattern targetPattern : targetUrlPatterns) {
@@ -201,107 +223,108 @@ public class PageModelExtractor {
         }
         if (!matched) return null;
 
+        // Process on single page.
         if (objectExtractor == null) {
             return processSingle(page, null, true);
-        } else {
-            if (objectExtractor.isMulti()) {
-                List<Object> os = new ArrayList<>();
-                List<String> list = objectExtractor.getSelector().selectList(page.getRawText());
-                for (String s : list) {
-                    Object obj = processSingle(page, s, false);
-                    if (obj != null) {
-                        os.add(obj);
-                    }
-                }
-                return os;
-            } else {
-                String select = objectExtractor.getSelector().select(page.getRawText());
-                return processSingle(page, select, false);
+        }
+
+        if (objectExtractor.isMulti()) {
+            var lstModelObj = new ArrayList<>();
+            List<String> rawExtract = objectExtractor.getSelector().selectList(page.getRawText());
+            for (String html : rawExtract) {
+                Object modelObj = processSingle(page, html, false);
+                if (modelObj != null) lstModelObj.add(modelObj);
             }
+            return lstModelObj;
+        } else {
+            String select = objectExtractor.getSelector().select(page.getRawText());
+            return processSingle(page, select, false);
         }
     }
 
     private Object processSingle(Page page, String html, boolean isRaw) {
-        Object o = null;
+        Object modelObj = null;
         try {
-            o = clazz.getDeclaredConstructor().newInstance();
+            modelObj = clazz.getDeclaredConstructor().newInstance();
             for (FieldExtractor fieldExtractor : fieldExtractors) {
                 if (fieldExtractor.isMulti()) {
-                    List<String> value;
-                    switch (fieldExtractor.getSource()) {
-                        case RawHtml:
-                            value = page.getHtml().selectDocumentForList(fieldExtractor.getSelector());
-                            break;
-                        case Html:
-                            if (isRaw) {
-                                value = page.getHtml().selectDocumentForList(fieldExtractor.getSelector());
-                            } else {
-                                value = fieldExtractor.getSelector().selectList(html);
-                            }
-                            break;
-                        case Url:
-                            value = fieldExtractor.getSelector().selectList(page.getUrl().toString());
-                            break;
-                        case RawText:
-                            value = fieldExtractor.getSelector().selectList(page.getRawText());
-                            break;
-                        default:
-                            value = fieldExtractor.getSelector().selectList(html);
-                    }
-                    if ((value == null || value.size() == 0) && fieldExtractor.isNotNull()) {
+                    var values = extractFieldMultiValue(page, html, isRaw, fieldExtractor);
+                    if (CollectionUtils.isEmpty(values) && fieldExtractor.isNotNull()) {
                         return null;
                     }
                     if (fieldExtractor.getObjectFormatter() != null) {
-                        List<Object> converted = convert(value, fieldExtractor.getObjectFormatter());
-                        setField(o, fieldExtractor, converted);
+                        List<Object> converted = convert(values, fieldExtractor.getObjectFormatter());
+                        setField(modelObj, fieldExtractor, converted);
                     } else {
-                        setField(o, fieldExtractor, value);
+                        setField(modelObj, fieldExtractor, values);
                     }
                 } else {
-                    String value;
-                    switch (fieldExtractor.getSource()) {
-                        case RawHtml:
-                            value = page.getHtml().selectDocument(fieldExtractor.getSelector());
-                            break;
-                        case Html:
-                            if (isRaw) {
-                                value = page.getHtml().selectDocument(fieldExtractor.getSelector());
-                            } else {
-                                value = fieldExtractor.getSelector().select(html);
-                            }
-                            break;
-                        case Url:
-                            value = fieldExtractor.getSelector().select(page.getUrl().toString());
-                            break;
-                        case RawText:
-                            value = fieldExtractor.getSelector().select(page.getRawText());
-                            break;
-                        default:
-                            value = fieldExtractor.getSelector().select(html);
-                    }
-                    if (value == null && fieldExtractor.isNotNull()) {
+                    var value = extractNormalField(page, html, isRaw, fieldExtractor);
+                    if (StringUtils.isEmpty(value) && fieldExtractor.isNotNull()) {
                         return null;
                     }
                     if (fieldExtractor.getObjectFormatter() != null) {
                         Object converted = convert(value, fieldExtractor.getObjectFormatter());
-                        if (converted == null && fieldExtractor.isNotNull()) {
-                            return null;
-                        }
-                        setField(o, fieldExtractor, converted);
+                        setField(modelObj, fieldExtractor, converted);
                     } else {
-                        setField(o, fieldExtractor, value);
+                        setField(modelObj, fieldExtractor, value);
                     }
                 }
             }
             if (AfterExtractor.class.isAssignableFrom(clazz)) {
-                ((AfterExtractor) o).afterProcess(page);
+                ((AfterExtractor) modelObj).afterProcess(page);
             }
         } catch (Exception e) {
             log.error("extract fail", e);
         }
-        return o;
+        return modelObj;
     }
 
+    private String extractNormalField(Page page,
+                                      String html,
+                                      boolean isRaw,
+                                      FieldExtractor fieldExtractor) {
+        switch (fieldExtractor.getSource()) {
+            case RawHtml:
+                return page.getHtml().selectDocument(fieldExtractor.getSelector());
+            case Html:
+                if (isRaw) {
+                    return page.getHtml().selectDocument(fieldExtractor.getSelector());
+                } else {
+                    return fieldExtractor.getSelector().select(html);
+                }
+            case Url:
+                return fieldExtractor.getSelector().select(page.getUrl().toString());
+            case RawText:
+                return fieldExtractor.getSelector().select(page.getRawText());
+            default:
+                return fieldExtractor.getSelector().select(html);
+        }
+    }
+
+    private List<String> extractFieldMultiValue(Page page,
+                                                String html,
+                                                boolean isRaw,
+                                                FieldExtractor fieldExtractor) {
+        switch (fieldExtractor.getSource()) {
+            case RawHtml:
+                return page.getHtml().selectDocumentForList(fieldExtractor.getSelector());
+            case Html:
+                if (isRaw) {
+                    return page.getHtml().selectDocumentForList(fieldExtractor.getSelector());
+                } else {
+                    return fieldExtractor.getSelector().selectList(html);
+                }
+            case Url:
+                return fieldExtractor.getSelector().selectList(page.getUrl().toString());
+            case RawText:
+                return fieldExtractor.getSelector().selectList(page.getRawText());
+            default:
+                return fieldExtractor.getSelector().selectList(html);
+        }
+    }
+
+    @SuppressWarnings("rawtypes")
     private Object convert(String value, ObjectFormatter objectFormatter) {
         try {
             if (StringUtils.isNotEmpty(value)) {
@@ -315,6 +338,7 @@ public class PageModelExtractor {
         return null;
     }
 
+    @SuppressWarnings("rawtypes")
     private List<Object> convert(List<String> values, ObjectFormatter objectFormatter) {
         if (CollectionUtils.isEmpty(values)) return Collections.emptyList();
 
@@ -329,12 +353,11 @@ public class PageModelExtractor {
     }
 
     private void setField(Object o, FieldExtractor fieldExtractor, Object value) throws IllegalAccessException, InvocationTargetException {
-        if (value == null) {
-            return;
+        if (value != null) {
+            if (fieldExtractor.getSetterMethod() != null) {
+                fieldExtractor.getSetterMethod().invoke(o, value);
+            }
+            fieldExtractor.getField().set(o, value);
         }
-        if (fieldExtractor.getSetterMethod() != null) {
-            fieldExtractor.getSetterMethod().invoke(o, value);
-        }
-        fieldExtractor.getField().set(o, value);
     }
 }

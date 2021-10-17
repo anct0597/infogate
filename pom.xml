@@ -12,6 +12,7 @@
         <module>infogate-core</module>
         <module>infogate-extension</module>
         <module>infogate-web</module>
+        <module>infogate-common</module>
     </modules>
 
     <properties>
@@ -19,4 +20,16 @@
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.32</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.32</version>
+        </dependency>
+    </dependencies>
 </project>

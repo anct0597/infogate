@@ -1,32 +1,33 @@
 package vn.infogate.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import vn.infogate.selector.Selector;
 
 /**
  * The object contains 'ExtractBy' information.
- * @author code4crafter@gmail.com <br>
- * @since 0.2.0
+ *
+ * @author anct
  */
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Extractor {
 
     private Selector selector;
 
-    private final Source source;
+    private Source source;
 
-    private final boolean notNull;
+    private boolean notNull;
 
-    private final boolean multi;
+    private boolean multi;
 
-    enum Source {Html, Url, RawHtml, RawText}
+    public enum Source {Html, Url, RawHtml, RawText}
 
-    public Extractor(Selector selector, Source source, boolean notNull, boolean multi) {
-        this.selector = selector;
-        this.source = source;
-        this.notNull = notNull;
-        this.multi = multi;
+    public enum Type {
+        XPath, Regex, Css, JsonPath
     }
 }

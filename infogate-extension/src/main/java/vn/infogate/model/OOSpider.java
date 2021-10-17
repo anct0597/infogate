@@ -3,58 +3,19 @@ package vn.infogate.model;
 import vn.infogate.Site;
 import vn.infogate.Spider;
 import vn.infogate.pipeline.PageModelPipeline;
-import vn.infogate.processor.PageProcessor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * The spider for page model extractor.<br>
- * In webmagic, we call a POJO containing extract result as "page model". <br>
- * You can customize a crawler by write a page model with annotations. <br>
- * Such as:
- * <pre>
- * {@literal @}TargetUrl("http://my.oschina.net/flashsword/blog/\\d+")
- *  public class OschinaBlog{
- *
- *      {@literal @}ExtractBy("//title")
- *      private String title;
- *
- *      {@literal @}ExtractBy(value = "div.BlogContent",type = ExtractBy.Type.Css)
- *      private String content;
- *
- *      {@literal @}ExtractBy(value = "//div[@class='BlogTags']/a/text()", multi = true)
- *      private List&lt;String&gt; tags;
- * }
- * </pre>
- * And start the spider by:
- * <pre>
- *   OOSpider.create(Site.me().addStartUrl("http://my.oschina.net/flashsword/blog")
- *        ,new JsonFilePageModelPipeline(), OschinaBlog.class).run();
- * }
- * </pre>
- *
- * @author code4crafter@gmail.com <br>
- * @since 0.2.0
+ * @author anct.
  */
-@SuppressWarnings({"rawtypes", "unchecked"})
-public class OOSpider<T> extends Spider {
-
-    private ModelPageProcessor modelPageProcessor;
+@SuppressWarnings({"rawtypes"})
+public class OOSpider extends Spider {
 
     private ModelPipeline modelPipeline;
+    private final ModelPageProcessor modelPageProcessor;
 
-    private PageModelPipeline pageModelPipeline;
-
-    private final List<Class<?>> pageModelClasses = new ArrayList<>();
-
-    protected OOSpider(ModelPageProcessor modelPageProcessor) {
+    private OOSpider(ModelPageProcessor modelPageProcessor) {
         super(modelPageProcessor);
         this.modelPageProcessor = modelPageProcessor;
-    }
-
-    public OOSpider(PageProcessor pageProcessor) {
-        super(pageProcessor);
     }
 
     /**
@@ -72,7 +33,6 @@ public class OOSpider<T> extends Spider {
             if (pageModelPipeline != null) {
                 this.modelPipeline.put(pageModel, pageModelPipeline);
             }
-            pageModelClasses.add(pageModel);
         }
     }
 
@@ -91,10 +51,4 @@ public class OOSpider<T> extends Spider {
         }
         return this;
     }
-
-    public OOSpider setIsExtractLinks(boolean isExtractLinks) {
-        modelPageProcessor.setExtractLinks(isExtractLinks);
-        return this;
-    }
-
 }

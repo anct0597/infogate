@@ -13,15 +13,11 @@ public abstract class BasicTypeFormatter<T> implements ObjectFormatter<T> {
 
     @Override
     public void initParam(String[] extra) {
-
     }
 
     @Override
     public T format(String raw) throws Exception {
-        if (StringUtils.isNotEmpty(raw)) {
-            return formatTrimmed(raw.trim());
-        }
-        return null;
+        return StringUtils.isNotEmpty(raw) ? formatTrimmed(raw.trim()) : null;
     }
 
     protected abstract T formatTrimmed(String raw) throws Exception;
@@ -89,7 +85,7 @@ public abstract class BasicTypeFormatter<T> implements ObjectFormatter<T> {
 
     public static class FloatFormatter extends BasicTypeFormatter<Float> {
         @Override
-        public Float formatTrimmed(String raw) throws Exception {
+        public Float formatTrimmed(String raw) {
             return Float.parseFloat(raw);
         }
 

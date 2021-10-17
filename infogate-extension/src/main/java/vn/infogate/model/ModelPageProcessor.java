@@ -5,27 +5,29 @@ import lombok.Setter;
 import vn.infogate.Page;
 import vn.infogate.Request;
 import vn.infogate.Site;
+import vn.infogate.common.utils.Utils;
 import vn.infogate.processor.PageProcessor;
-import vn.infogate.selector.Selector;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * The extension to PageProcessor for page model extractor.
  *
- * @author code4crafter@gmail.com <br>
- * @since 0.2.0
+ * @author anct.
+ * @version 1.0
  */
 @Getter
 @Setter
 public class ModelPageProcessor implements PageProcessor {
 
     private final Site site;
-    private boolean extractLinks = true;
-    private final List<PageModelExtractor> pageModelExtractorList = new ArrayList<>();
+    private final List<PageModelExtractor> pageModelExtractorList;
+
+    private ModelPageProcessor(Site site) {
+        this.site = site;
+        this.pageModelExtractorList = new ArrayList<>(1);
+    }
 
     public static ModelPageProcessor create(Site site, Class<?>... classLst) {
         var modelPageProcessor = new ModelPageProcessor(site);
@@ -35,46 +37,46 @@ public class ModelPageProcessor implements PageProcessor {
         return modelPageProcessor;
     }
 
-
-    public ModelPageProcessor addPageModel(Class<?> clazz) {
+    public void addPageModel(Class<?> clazz) {
         var pageModelExtractor = PageModelExtractor.create(clazz);
         pageModelExtractorList.add(pageModelExtractor);
-        return this;
-    }
-
-    private ModelPageProcessor(Site site) {
-        this.site = site;
     }
 
     @Override
     public void process(Page page) {
         for (var pageModelExtractor : pageModelExtractorList) {
-            if (extractLinks) {
-                extractLinks(page, pageModelExtractor.getHelpUrlRegionSelector(), pageModelExtractor.getHelpUrlPatterns());
-                extractLinks(page, pageModelExtractor.getTargetUrlRegionSelector(), pageModelExtractor.getTargetUrlPatterns());
-            }
-            Object process = pageModelExtractor.process(page);
-            if (process == null || (process instanceof List && ((List) process).size() == 0)) {
-                continue;
-            }
-            postProcessPageModel(pageModelExtractor.getClazz(), process);
-            page.putField(pageModelExtractor.getClazz().getCanonicalName(), process);
-         }
-        if (page.getResultItems().getAll().size() == 0) {
+            extractLinks(page, pageModelExtractor);
+            Object modelObj = pageModelExtractor.process(page);
+            if (Utils.isNullOrEmpty(modelObj)) continue;
+
+            postProcessPageModel(pageModelExtractor.getClazz(), modelObj);
+            page.putField(pageModelExtractor.getClazz().getCanonicalName(), modelObj);
+        }
+        if (page.getResultItems().isEmpty()) {
             page.getResultItems().setSkip(true);
         }
     }
 
-    private void extractLinks(Page page, Selector urlRegionSelector, List<Pattern> urlPatterns) {
+    private void extractLinks(Page page, PageModelExtractor extractor) {
         List<String> links;
-        if (urlRegionSelector == null) {
+        var regionSelector = extractor.getTargetUrlRegionSelector();
+        if (regionSelector == null) {
             links = page.getHtml().links().all();
         } else {
-            links = page.getHtml().selectList(urlRegionSelector).links().all();
+            links = page.getHtml().selectList(regionSelector).links().all();
         }
         for (String link : links) {
-            for (Pattern targetUrlPattern : urlPatterns) {
-                Matcher matcher = targetUrlPattern.matcher(link);
+            var ignored = false;
+            for (var ignoredPattern : extractor.getIgnoredPatterns()) {
+                var matcher = ignoredPattern.matcher(link);
+                if (matcher.matches()) {
+                    ignored = true;
+                    break;
+                }
+            }
+            if (ignored) continue;
+            for (var urlPattern : extractor.getTargetUrlPatterns()) {
+                var matcher = urlPattern.matcher(link);
                 if (matcher.find()) {
                     page.addTargetRequest(new Request(matcher.group(0)));
                 }

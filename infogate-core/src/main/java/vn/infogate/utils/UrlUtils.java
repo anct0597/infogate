@@ -20,12 +20,14 @@ import java.util.regex.Pattern;
  */
 public class UrlUtils {
 
+    private static final Pattern PATTERN_FOR_CHARSET = Pattern.compile("charset\\s*=\\s*['\"]*([^\\s;'\"]*)", Pattern.CASE_INSENSITIVE);
+
     /**
      * canonicalizeUrl
      * <br>
      * Borrowed from Jsoup.
      *
-     * @param url url
+     * @param url   url
      * @param refer refer
      * @return canonicalizeUrl
      */
@@ -50,7 +52,6 @@ public class UrlUtils {
     }
 
     /**
-     *
      * @param url url
      * @return new url
      * @deprecated
@@ -92,31 +93,42 @@ public class UrlUtils {
         int portIndex = domain.indexOf(":");
         if (portIndex != -1) {
             return domain.substring(0, portIndex);
-        }else {
+        } else {
             return domain;
         }
     }
 
+    /**
+     * Convert urls to request.
+     *
+     * @param urls urls.
+     */
     public static List<Request> convertToRequests(Collection<String> urls) {
-        List<Request> requestList = new ArrayList<Request>(urls.size());
-        for (String url : urls) {
+        var requestList = new ArrayList<Request>(urls.size());
+        for (var url : urls) {
             requestList.add(new Request(url));
         }
         return requestList;
     }
 
+    /**
+     * Convert request to urls.
+     */
     public static List<String> convertToUrls(Collection<Request> requests) {
-        List<String> urlList = new ArrayList<String>(requests.size());
-        for (Request request : requests) {
+        var urlList = new ArrayList<String>(requests.size());
+        for (var request : requests) {
             urlList.add(request.getUrl());
         }
         return urlList;
     }
 
-    private static final Pattern patternForCharset = Pattern.compile("charset\\s*=\\s*['\"]*([^\\s;'\"]*)", Pattern.CASE_INSENSITIVE);
-
+    /**
+     * Try to detect charset.
+     *
+     * @param contentType content type.
+     */
     public static String getCharset(String contentType) {
-        Matcher matcher = patternForCharset.matcher(contentType);
+        Matcher matcher = PATTERN_FOR_CHARSET.matcher(contentType);
         if (matcher.find()) {
             String charset = matcher.group(1);
             if (Charset.isSupported(charset)) {

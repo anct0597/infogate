@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author code4crafter@gmail.com
  * @since 0.7.0
- *         Date: 2017/6/3
+ * Date: 2017/6/3
  */
 @SuppressWarnings("rawtypes")
 public class ObjectFormatterBuilder {
@@ -21,10 +21,10 @@ public class ObjectFormatterBuilder {
     }
 
     private ObjectFormatter initFormatterForType(Class<?> fieldClazz, String[] params) {
-        if (fieldClazz.equals(String.class) || List.class.isAssignableFrom(fieldClazz)){
+        if (fieldClazz.equals(String.class) || List.class.isAssignableFrom(fieldClazz)) {
             return null;
         }
-        Class<? extends ObjectFormatter> formatterClass = ObjectFormatters.get(BasicTypeFormatter.detectBasicClass(fieldClazz));
+        var formatterClass = ObjectFormatters.get(BasicTypeFormatter.detectBasicClass(fieldClazz));
         if (formatterClass == null) {
             throw new IllegalStateException("Can't find formatter for field " + field.getName() + " of type " + fieldClazz);
         }
@@ -33,16 +33,16 @@ public class ObjectFormatterBuilder {
 
     private ObjectFormatter initFormatter(Class<? extends ObjectFormatter> formatterClazz, String[] params) {
         try {
-            ObjectFormatter objectFormatter = formatterClazz.newInstance();
+            var objectFormatter = formatterClazz.getDeclaredConstructor().newInstance();
             objectFormatter.initParam(params);
             return objectFormatter;
-        } catch (InstantiationException | IllegalAccessException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     public ObjectFormatter build() {
-        Formatter formatter = field.getAnnotation(Formatter.class);
+        var formatter = field.getAnnotation(Formatter.class);
         if (formatter != null && !formatter.formatter().equals(Formatter.DEFAULT_FORMATTER)) {
             return initFormatter(formatter.formatter(), formatter.value());
         }
