@@ -1,0 +1,8 @@
+Quy trình update phường xã:
+1. https://danhmuchanhchinh.gso.gov.vn/
+Chạy https://github.com/nguyenary/VietnamAddressAPI/blob/master/download-script.js
+2. Merge các file thành 1
+https://products.aspose.app/cells/merger#:~:text=1%20Click%20inside%20the%20file%20drop%20area%20to,links%20will%20stop%20working%20after%20this%20time%20period.
+3. Convert to Json
+https://beautifytools.com/excel-to-json-converter.php
+4. Format json

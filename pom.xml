@@ -13,6 +13,7 @@
         <module>infogate-extension</module>
         <module>infogate-web</module>
         <module>infogate-common</module>
+        <module>infogate-notify</module>
     </modules>
 
     <properties>
@@ -30,6 +31,19 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.32</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.20</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>4.0.0-rc-2</version>
         </dependency>
     </dependencies>
 </project>
