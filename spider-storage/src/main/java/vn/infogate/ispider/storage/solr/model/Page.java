@@ -1,4 +1,4 @@
-package vn.infogate.ispider.storage.model;
+package vn.infogate.ispider.storage.solr.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;

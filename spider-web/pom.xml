@@ -22,6 +22,11 @@
             <artifactId>spider-extension</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>vn.infogate</groupId>
+            <artifactId>spider-storage</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

@@ -3,10 +3,10 @@ package vn.infogate.ispider.web.collectors;
 import org.apache.commons.lang3.tuple.Pair;
 import vn.infogate.ispider.web.model.LocationModel;
 import vn.infogate.ispider.web.model.PriceModel;
-import vn.infogate.ispider.web.types.PropertyDirection;
-import vn.infogate.ispider.web.types.PropertyEquipment;
-import vn.infogate.ispider.web.types.PropertyType;
-import vn.infogate.ispider.web.types.Regex;
+import vn.infogate.ispider.storage.model.types.PropertyDirection;
+import vn.infogate.ispider.storage.model.types.PropertyEquipment;
+import vn.infogate.ispider.storage.model.types.PropertyType;
+import vn.infogate.ispider.storage.model.types.Regex;
 import vn.infogate.ispider.json.JsonFieldCollector;
 
 import java.util.ArrayList;

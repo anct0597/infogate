@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import vn.infogate.ispider.web.types.PriceUnit;
+import vn.infogate.ispider.storage.model.types.PriceUnit;
 
 /**
  * @author anct.

@@ -6,11 +6,10 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.common.SolrInputDocument;
 import vn.infogate.ispider.common.utils.UUIdUtils;
 import vn.infogate.ispider.common.utils.Utils;
-import vn.infogate.ispider.storage.model.AtomicUpdate;
-import vn.infogate.ispider.storage.model.UDoc;
-import vn.infogate.ispider.storage.model.UField;
 import vn.infogate.ispider.storage.solr.exception.MethodNotAvailableException;
-import vn.infogate.ispider.storage.solr.exception.RepositoryException;
+import vn.infogate.ispider.storage.solr.model.AtomicUpdate;
+import vn.infogate.ispider.storage.solr.model.UDoc;
+import vn.infogate.ispider.storage.solr.model.UField;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -230,7 +229,7 @@ public abstract class DelaySolrRepositoryImpl<E> extends SolrRepositoryImpl<E> {
     }
 
     @Override
-    public void update(String id, Set<UField> uFields) throws RepositoryException {
+    public void update(String id, Set<UField> uFields) {
         if (StringUtils.isNotEmpty(id)) {
             if (updateQueue.containsKey(id)) {
                 var currentFields = this.updateQueue.get(id).getUpdateFields();
@@ -254,7 +253,7 @@ public abstract class DelaySolrRepositoryImpl<E> extends SolrRepositoryImpl<E> {
     }
 
     /**
-     * If update field has ADD action and solr field is multiValue
+     * If update field has ADDED action and solr field is multiValue
      * => combine current values & update values.
      *
      * @param uFields       solr fields need update.

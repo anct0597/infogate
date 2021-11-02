@@ -8,8 +8,8 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrInputDocument;
-import vn.infogate.ispider.storage.model.Page;
-import vn.infogate.ispider.storage.model.UField;
+import vn.infogate.ispider.storage.solr.model.Page;
+import vn.infogate.ispider.storage.solr.model.UField;
 import vn.infogate.ispider.storage.solr.exception.RepositoryException;
 
 import java.io.IOException;

@@ -9,7 +9,7 @@ import java.util.Properties;
 @Slf4j
 public class ConfigProperties {
 
-    public static final String CONFIG_PATH = "./config";
+    public static final String CONFIG_PATH = "spider-web/config/config.properties";
     private final Properties properties;
 
     private ConfigProperties() {

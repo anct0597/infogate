@@ -77,7 +77,7 @@ public class LocationUtils {
             this.locationMap = LinkedListMultimap.create();
             var mapper = ObjectMapperFactory.getInstance();
 
-            var content = Files.readString(Paths.get("infogate-web/data/location.txt"));
+            var content = Files.readString(Paths.get("spider-web/data/location.txt"));
             var locations = mapper.readValue(content.replaceAll("\uFEFF", ""),
                     new TypeReference<List<LocationModel>>() {
                     });

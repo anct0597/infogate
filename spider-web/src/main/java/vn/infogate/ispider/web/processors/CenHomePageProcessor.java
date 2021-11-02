@@ -17,6 +17,6 @@ public class CenHomePageProcessor extends JsonDefinedPageProcessor {
 
     @Override
     protected void postProcess(Page page) {
-        System.out.println(page.getResultItems());
+        // Do anything here
     }
 }

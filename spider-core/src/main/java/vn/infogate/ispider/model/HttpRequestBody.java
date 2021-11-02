@@ -1,5 +1,9 @@
 package vn.infogate.ispider.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
@@ -10,9 +14,13 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * @author code4crafter@gmail.com
- * Date: 17/4/8
+ * @author an.cantuong
+ * created at 11/2/2021
  */
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class HttpRequestBody implements Serializable {
 
     private static final long serialVersionUID = 5659170945717023595L;
@@ -33,35 +41,6 @@ public class HttpRequestBody implements Serializable {
     private String contentType;
 
     private String encoding;
-
-    public HttpRequestBody() {
-    }
-
-    public HttpRequestBody(byte[] body, String contentType, String encoding) {
-        this.body = body;
-        this.contentType = contentType;
-        this.encoding = encoding;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    public String getEncoding() {
-        return encoding;
-    }
-
-    public void setBody(byte[] body) {
-        this.body = body;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
-
-    public void setEncoding(String encoding) {
-        this.encoding = encoding;
-    }
 
     public static HttpRequestBody json(String json, String encoding) {
         try {
@@ -93,9 +72,5 @@ public class HttpRequestBody implements Serializable {
         } catch (UnsupportedEncodingException e) {
             throw new IllegalArgumentException("illegal encoding " + encoding, e);
         }
-    }
-
-    public byte[] getBody() {
-        return body;
     }
 }

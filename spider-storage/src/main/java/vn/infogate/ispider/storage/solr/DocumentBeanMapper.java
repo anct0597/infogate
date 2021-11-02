@@ -4,7 +4,7 @@ import org.apache.solr.client.solrj.beans.BindingException;
 import org.apache.solr.client.solrj.beans.Field;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrInputDocument;
-import vn.infogate.ispider.storage.model.SField;
+import vn.infogate.ispider.storage.solr.model.SField;
 
 import java.lang.reflect.AccessibleObject;
 import java.util.ArrayList;

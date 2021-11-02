@@ -1,6 +1,6 @@
 {
   "thread": 1,
-  "status": 0,
+  "status": 1,
   "pageModel": {
     "targetUrls": [
       "https://cenhomes.vn/mua-nha/[a-zA-Z-0-9]+",
@@ -11,9 +11,10 @@
       "https://cenhomes.vn/mua-nha/chinh-chu-ban-nha-le-quang-dao-my-dinh-nam-tu-liem-view-ho-gara-7-cho-o-to-tranh-10294912"
     ],
     "pipelines": [
-      "vn.infogate.web.pipeline.CenHomeModelGatherPipeline"
+      "vn.infogate.ispider.web.pipeline.CenHomeModelGatherPipeline",
+      "vn.infogate.ispider.web.pipeline.CenHomeStoragePipeline"
     ],
-    "pageProcessor": "vn.infogate.web.processors.CenHomePageProcessor",
+    "pageProcessor": "vn.infogate.ispider.web.processors.CenHomePageProcessor",
     "fields": [
       {
         "name": "title",

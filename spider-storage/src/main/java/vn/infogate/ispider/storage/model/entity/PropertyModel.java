@@ -1,11 +1,9 @@
-package vn.infogate.ispider.web.model;
+package vn.infogate.ispider.storage.model.entity;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import vn.infogate.ispider.web.types.PropertyDirection;
-import vn.infogate.ispider.web.types.PropertyType;
-import vn.infogate.ispider.web.types.AreaUnit;
+import vn.infogate.ispider.storage.model.types.*;
 
 import java.util.List;
 
@@ -29,7 +27,7 @@ public class PropertyModel {
 
     private AreaUnit unitArea;
 
-    private Long price;
+    private Long totalPrice;
 
     private Long unitPrice;
 
@@ -43,6 +41,10 @@ public class PropertyModel {
     private String rawLocation;
 
     private PropertyType propertyType;
+
+    private PropertyEquipment equipment;
+
+    private PropertyLegalStatus legalStatus;
 
     // Url to property news.
     private String url;
@@ -61,7 +63,7 @@ public class PropertyModel {
     private String source;
 
     // From Broker or property owner.
-    private String publishType;
+    private PublishType publishType;
 
     // Phone number of publisher.
     private String publisher;

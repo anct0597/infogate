@@ -1,4 +1,4 @@
-package vn.infogate.ispider.storage.model;
+package vn.infogate.ispider.storage.solr.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package vn.infogate.ispider.web.types;
+package vn.infogate.ispider.storage.model.types;
 
 import java.util.regex.Pattern;
 

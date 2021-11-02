@@ -2,8 +2,8 @@ package vn.infogate.ispider.storage.solr;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.solr.common.SolrInputDocument;
-import vn.infogate.ispider.storage.model.UDoc;
-import vn.infogate.ispider.storage.model.UField;
+import vn.infogate.ispider.storage.solr.model.UDoc;
+import vn.infogate.ispider.storage.solr.model.UField;
 
 import java.util.HashMap;
 import java.util.Map;

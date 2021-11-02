@@ -5,9 +5,9 @@ import org.apache.commons.lang3.tuple.Pair;
 import vn.infogate.ispider.web.model.LocationModel;
 import vn.infogate.ispider.web.model.PriceModel;
 import vn.infogate.ispider.web.normalizer.TextNormalizer;
-import vn.infogate.ispider.web.types.PriceUnit;
-import vn.infogate.ispider.web.types.PropertyLegalStatus;
-import vn.infogate.ispider.web.types.Regex;
+import vn.infogate.ispider.storage.model.types.PriceUnit;
+import vn.infogate.ispider.storage.model.types.PropertyLegalStatus;
+import vn.infogate.ispider.storage.model.types.Regex;
 import vn.infogate.ispider.web.utils.LocationUtils;
 import vn.infogate.ispider.web.utils.VNCharacterUtils;
 

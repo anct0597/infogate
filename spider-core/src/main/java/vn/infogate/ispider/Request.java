@@ -1,7 +1,6 @@
 package vn.infogate.ispider;
 
 import lombok.Getter;
-import lombok.Setter;
 import vn.infogate.ispider.downloader.Downloader;
 import vn.infogate.ispider.model.HttpRequestBody;
 import vn.infogate.ispider.scheduler.PriorityScheduler;
@@ -20,50 +19,59 @@ import java.util.Objects;
  * @since 0.1.0
  */
 @Getter
-@Setter
 public class Request implements Serializable {
 
     private static final long serialVersionUID = 2062192774891352043L;
-
     public static final String CYCLE_TRIED_TIMES = "_cycle_tried_times";
 
+    /**
+     * Request url.
+     */
     private String url;
 
+    /**
+     * Request method.
+     */
     private String method;
 
+    /**
+     * Request body.
+     */
     private HttpRequestBody requestBody;
+    /**
+     * Charset of site.
+     */
+    private String charset;
 
     /**
      * this req use this downloader
      */
     private Downloader downloader;
-
     /**
      * Store additional information in extras.
      */
     private Map<String, Object> extras;
-
     /**
      * cookies for current url, if not set use Site's cookies
      */
-    private final Map<String, String> cookies = new HashMap<>();
-
-    private final Map<String, String> headers = new HashMap<>();
+    private final Map<String, String> cookies = new HashMap<>(5);
+    /**
+     * Header for site.
+     */
+    private final Map<String, String> headers = new HashMap<>(3);
 
     /**
      * Priority of the request.<br>
      * The bigger will be processed earlier. <br>
+     *
      * @see PriorityScheduler
      */
     private long priority;
 
     /**
      * When it is set to TRUE, the downloader will not try to parse response body to text.
-     *
      */
-    private boolean binaryContent = false;
-
-    private String charset;
+    private boolean binaryContent;
 
     public Request() {
     }
@@ -72,17 +80,13 @@ public class Request implements Serializable {
         this.url = url;
     }
 
-    public long getPriority() {
-        return priority;
-    }
-
     /**
      * Set the priority of request for sorting.<br>
      * Need a scheduler supporting priority.<br>
-     * @see PriorityScheduler
      *
      * @param priority priority
      * @return this
+     * @see PriorityScheduler
      */
     @Experimental
     public Request setPriority(long priority) {
@@ -92,16 +96,11 @@ public class Request implements Serializable {
 
     @SuppressWarnings("unchecked")
     public <T> T getExtra(String key) {
-        if (extras == null) {
-            return null;
-        }
-        return (T) extras.get(key);
+        return extras == null ? null : (T) extras.get(key);
     }
 
     public <T> Request putExtra(String key, T value) {
-        if (extras == null) {
-            extras = new HashMap<>();
-        }
+        if (extras == null) extras = new HashMap<>(2);
         extras.put(key, value);
         return this;
     }
@@ -119,21 +118,6 @@ public class Request implements Serializable {
     public Request setMethod(String method) {
         this.method = method;
         return this;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = url != null ? url.hashCode() : 0;
-        result = 31 * result + (method != null ? method.hashCode() : 0);
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Request request = (Request) o;
-        return Objects.equals(url, request.url) && Objects.equals(method, request.method);
     }
 
     public Request addCookie(String name, String value) {
@@ -156,6 +140,31 @@ public class Request implements Serializable {
         return this;
     }
 
+    public Request setDownloader(Downloader downloader) {
+        this.downloader = downloader;
+        return this;
+    }
+
+    public Request setRequestBody(HttpRequestBody requestBody) {
+        this.requestBody = requestBody;
+        return this;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = url != null ? url.hashCode() : 0;
+        result = 31 * result + (method != null ? method.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Request request = (Request) o;
+        return Objects.equals(url, request.url) && Objects.equals(method, request.method);
+    }
+
     @Override
     public String toString() {
         return "Request{" +
@@ -164,7 +173,7 @@ public class Request implements Serializable {
                 ", extras=" + extras +
                 ", priority=" + priority +
                 ", headers=" + headers +
-                ", cookies="+ cookies+
+                ", cookies=" + cookies +
                 '}';
     }
 
