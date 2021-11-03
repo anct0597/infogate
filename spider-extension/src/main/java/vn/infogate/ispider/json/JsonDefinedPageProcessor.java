@@ -7,8 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 import vn.infogate.ispider.Page;
 import vn.infogate.ispider.Request;
 import vn.infogate.ispider.model.Extractor;
-import vn.infogate.ispider.utils.ExtractorUtils;
 import vn.infogate.ispider.processor.PageProcessor;
+import vn.infogate.ispider.utils.ExtractorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,12 +38,14 @@ public abstract class JsonDefinedPageProcessor implements PageProcessor {
             if (fieldExtractor.isMulti()) {
                 var values = extractMultiField(page, fieldExtractor);
                 if (fieldExtractor.isNotNull() && CollectionUtils.isEmpty(values)) {
+                    page.setSkip(true);
                     return;
                 }
                 page.putField(fieldExtractor.getFieldName(), values);
             } else {
                 var value = extractNormalField(page, fieldExtractor);
                 if (fieldExtractor.isNotNull() && StringUtils.isEmpty(value)) {
+                    page.setSkip(true);
                     return;
                 }
                 page.putField(fieldExtractor.getFieldName(), value);

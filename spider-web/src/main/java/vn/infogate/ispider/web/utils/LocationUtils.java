@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 import lombok.extern.slf4j.Slf4j;
+import vn.infogate.ispider.storage.model.entity.LocationModel;
 import vn.infogate.ispider.utils.ObjectMapperFactory;
-import vn.infogate.ispider.web.model.LocationModel;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -68,7 +68,9 @@ public class LocationUtils {
     }
 
     private String getShortProvinceText(String provinceText) {
-        return provinceText.replace("thanh pho", "").replace("tinh", "");
+        return provinceText
+                .replace("thanh pho", "")
+                .replace("tinh", "");
     }
 
     private void initLocation() {
@@ -85,8 +87,8 @@ public class LocationUtils {
                 location.setProvince(VNCharacterUtils.removeAccent(location.getProvince()).toLowerCase());
                 location.setDistrict(VNCharacterUtils.removeAccent(location.getDistrict()).toLowerCase());
                 location.setWard(VNCharacterUtils.removeAccent(location.getWard()).toLowerCase());
-                provinceMap.putIfAbsent(location.getProvinceId(), location.getProvince());
-                locationMap.put(location.getProvinceId(), location);
+                provinceMap.putIfAbsent(location.getProvinceCode(), location.getProvince());
+                locationMap.put(location.getProvinceCode(), location);
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);

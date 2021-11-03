@@ -46,6 +46,9 @@ public class JsonDefinedField {
          * extract from the raw html
          */
         RawHtml,
+        /**
+         * extract from raw text.
+         */
         RawText
     }
 }

@@ -1,10 +1,10 @@
-package vn.infogate.ispider.web.model;
+package vn.infogate.ispider.storage.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import vn.infogate.ispider.storage.model.types.PriceUnit;
+import vn.infogate.ispider.storage.model.types.CalculationUnit;
 
 /**
  * @author anct.
@@ -16,5 +16,5 @@ import vn.infogate.ispider.storage.model.types.PriceUnit;
 public class PriceModel {
     private double value;
 
-    private PriceUnit unit;
+    private CalculationUnit unit;
 }

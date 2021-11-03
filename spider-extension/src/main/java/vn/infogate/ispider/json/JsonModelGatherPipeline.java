@@ -1,6 +1,5 @@
 package vn.infogate.ispider.json;
 
-import org.apache.commons.collections4.CollectionUtils;
 import vn.infogate.ispider.ResultItems;
 import vn.infogate.ispider.Task;
 import vn.infogate.ispider.common.utils.Utils;
@@ -23,7 +22,6 @@ public abstract class JsonModelGatherPipeline implements Pipeline {
 
     @Override
     public void process(ResultItems resultItems, Task task) {
-        if (CollectionUtils.isEmpty(collectors) || resultItems.isSkip()) return;
         var fields = new HashMap<String, Object>();
         for (var collector : collectors) {
             var rawValue = resultItems.get(collector.extractFrom());

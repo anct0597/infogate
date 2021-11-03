@@ -2,10 +2,10 @@ package vn.infogate.ispider.web.collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
-import vn.infogate.ispider.web.model.LocationModel;
-import vn.infogate.ispider.web.model.PriceModel;
+import vn.infogate.ispider.storage.model.entity.LocationModel;
+import vn.infogate.ispider.storage.model.entity.PriceModel;
 import vn.infogate.ispider.web.normalizer.TextNormalizer;
-import vn.infogate.ispider.storage.model.types.PriceUnit;
+import vn.infogate.ispider.storage.model.types.CalculationUnit;
 import vn.infogate.ispider.storage.model.types.PropertyLegalStatus;
 import vn.infogate.ispider.storage.model.types.Regex;
 import vn.infogate.ispider.web.utils.LocationUtils;
@@ -41,30 +41,30 @@ public class CommonCollectors {
     }
 
     private static PriceModel extractWithCertainUnit(String rawPrice, String unit) {
-        PriceUnit detectUnit;
+        CalculationUnit detectUnit;
         double value = Double.parseDouble(TextNormalizer.replaceCommaByDot(rawPrice));
         if ("tr".equals(unit) || "trieu".equals(unit) || "triệu".equals(unit)) {
-            detectUnit = PriceUnit.TR;
+            detectUnit = CalculationUnit.TR;
         } else if ("ty".equals(unit) || "tỷ".equals(unit)) {
-            detectUnit = PriceUnit.TY;
+            detectUnit = CalculationUnit.TY;
         } else {
-            detectUnit = PriceUnit.K;
+            detectUnit = CalculationUnit.K;
         }
         return new PriceModel(value, detectUnit);
     }
 
     private static PriceModel extractWithoutUnit(String rawPrice) {
         double value;
-        PriceUnit detectUnit;
+        CalculationUnit detectUnit;
         var textPrice = TextNormalizer.removeCommaDot(rawPrice);
         if (textPrice.length() > 9) {
-            detectUnit = PriceUnit.TY;
+            detectUnit = CalculationUnit.TY;
             value = Long.parseLong(textPrice) * 1.0 / 1_000_000_000;
         } else if (textPrice.length() > 6) {
-            detectUnit = PriceUnit.TR;
+            detectUnit = CalculationUnit.TR;
             value = Long.parseLong(textPrice) * 1.0 / 1_000_000;
         } else {
-            detectUnit = PriceUnit.K;
+            detectUnit = CalculationUnit.K;
             value = Long.parseLong(textPrice) * 1.0 / 1_000;
         }
         return new PriceModel(value, detectUnit);

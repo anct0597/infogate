@@ -8,11 +8,22 @@ import lombok.Getter;
 @Getter
 public enum AreaUnit {
 
-    M2("m²");
+    M2(1, "m²");
 
+    private final int code;
     private final String name;
 
-    AreaUnit(String name) {
+    AreaUnit(int code, String name) {
+        this.code = code;
         this.name = name;
+    }
+
+    public static int getCode(String text) {
+        for (var type : values()) {
+            if (type.getName().equalsIgnoreCase(text)) {
+                return type.getCode();
+            }
+        }
+        return 1;
     }
 }

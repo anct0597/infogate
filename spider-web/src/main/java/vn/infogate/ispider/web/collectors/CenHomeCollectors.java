@@ -1,13 +1,11 @@
 package vn.infogate.ispider.web.collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
-import vn.infogate.ispider.web.model.LocationModel;
-import vn.infogate.ispider.web.model.PriceModel;
-import vn.infogate.ispider.storage.model.types.PropertyDirection;
-import vn.infogate.ispider.storage.model.types.PropertyEquipment;
-import vn.infogate.ispider.storage.model.types.PropertyType;
-import vn.infogate.ispider.storage.model.types.Regex;
 import vn.infogate.ispider.json.JsonFieldCollector;
+import vn.infogate.ispider.storage.model.document.PropertyInfoConstants;
+import vn.infogate.ispider.storage.model.entity.LocationModel;
+import vn.infogate.ispider.storage.model.entity.PriceModel;
+import vn.infogate.ispider.storage.model.types.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +18,7 @@ public enum CenHomeCollectors implements JsonFieldCollector {
     AREA {
         @Override
         public String extractFrom() {
-            return FieldConstants.AREA;
+            return PropertyInfoConstants.AREA;
         }
 
         @Override
@@ -32,18 +30,19 @@ public enum CenHomeCollectors implements JsonFieldCollector {
     AREA_UNIT {
         @Override
         public String extractFrom() {
-            return FieldConstants.AREA;
+            return PropertyInfoConstants.AREA;
         }
 
         @Override
         public String fieldName() {
-            return FieldConstants.AREA_UNIT;
+            return PropertyInfoConstants.AREA_UNIT;
         }
 
         @Override
-        public String collect(Object raw) {
+        public Integer collect(Object raw) {
             var matcher = Regex.AREA_UNIT.matcher(String.valueOf(raw));
-            return matcher.find() ? matcher.group(1) : "m²";
+            var areaUnit = matcher.find() ? matcher.group(1) : "m²";
+            return AreaUnit.getCode(areaUnit);
         }
     },
     PHONE {
@@ -59,7 +58,7 @@ public enum CenHomeCollectors implements JsonFieldCollector {
 
         @Override
         public String extractFrom() {
-            return FieldConstants.PHONE;
+            return PropertyInfoConstants.PHONES;
         }
     },
     BED_ROOM {
@@ -71,7 +70,7 @@ public enum CenHomeCollectors implements JsonFieldCollector {
 
         @Override
         public String extractFrom() {
-            return FieldConstants.BED_ROOM;
+            return PropertyInfoConstants.BED_ROOMS;
         }
     },
     BATH_ROOM {
@@ -83,7 +82,7 @@ public enum CenHomeCollectors implements JsonFieldCollector {
 
         @Override
         public String extractFrom() {
-            return FieldConstants.BATH_ROOM;
+            return PropertyInfoConstants.BATH_ROOMS;
         }
     },
     DIRECTION {
@@ -94,7 +93,7 @@ public enum CenHomeCollectors implements JsonFieldCollector {
 
         @Override
         public String extractFrom() {
-            return FieldConstants.DIRECTION;
+            return PropertyInfoConstants.DIRECTION;
         }
     },
     UNIT_PRICE {
@@ -105,7 +104,7 @@ public enum CenHomeCollectors implements JsonFieldCollector {
 
         @Override
         public String extractFrom() {
-            return FieldConstants.UNIT_PRICE;
+            return PropertyInfoConstants.UNIT_PRICE;
         }
     },
     RANGE_PRICE {
@@ -116,7 +115,7 @@ public enum CenHomeCollectors implements JsonFieldCollector {
 
         @Override
         public String extractFrom() {
-            return FieldConstants.RANGE_PRICE;
+            return PropertyInfoConstants.RANGE_PRICE;
         }
     },
     PRICE {
@@ -127,7 +126,7 @@ public enum CenHomeCollectors implements JsonFieldCollector {
 
         @Override
         public String extractFrom() {
-            return FieldConstants.TOTAL_PRICE;
+            return PropertyInfoConstants.TOTAL_PRICE;
         }
     },
     PROPERTY_TYPE {
@@ -138,7 +137,7 @@ public enum CenHomeCollectors implements JsonFieldCollector {
 
         @Override
         public String extractFrom() {
-            return FieldConstants.PROPERTY_TYPE;
+            return PropertyInfoConstants.PROPERTY_TYPE;
         }
     },
     EQUIPMENT {
@@ -149,7 +148,7 @@ public enum CenHomeCollectors implements JsonFieldCollector {
 
         @Override
         public String extractFrom() {
-            return FieldConstants.EQUIPMENT;
+            return PropertyInfoConstants.EQUIPMENT;
         }
     },
     LEGAL_STATUS {
@@ -160,7 +159,7 @@ public enum CenHomeCollectors implements JsonFieldCollector {
 
         @Override
         public String extractFrom() {
-            return FieldConstants.LEGAL_STATUS;
+            return PropertyInfoConstants.LEGAL_STATUS;
         }
     },
     DETAIL_LOCATION {
@@ -171,14 +170,12 @@ public enum CenHomeCollectors implements JsonFieldCollector {
 
         @Override
         public String fieldName() {
-            return FieldConstants.DETAIL_LOCATION;
+            return PropertyInfoConstants.DETAIL_LOCATION;
         }
 
         @Override
         public String extractFrom() {
-            return FieldConstants.LOCATION;
+            return PropertyInfoConstants.LOCATION;
         }
-    };
-
-
+    }
 }

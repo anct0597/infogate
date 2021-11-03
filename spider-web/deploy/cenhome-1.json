@@ -8,7 +8,7 @@
     ],
     "ignoreUrls": [],
     "startUrls": [
-      "https://cenhomes.vn/mua-nha/chinh-chu-ban-nha-le-quang-dao-my-dinh-nam-tu-liem-view-ho-gara-7-cho-o-to-tranh-10294912"
+      "https://cenhomes.vn/mua-nha/ban-nha-lien-ke-my-dinh-oto-tranh-kd-130m-4t-mt4-5m-18ty-10328489"
     ],
     "pipelines": [
       "vn.infogate.ispider.web.pipeline.CenHomeModelGatherPipeline",
@@ -22,7 +22,7 @@
         "required": true
       },
       {
-        "name": "phone",
+        "name": "phones",
         "expr": "//*[@class='btn-phone']/@data-phone",
         "required": true
       },
@@ -31,11 +31,11 @@
         "expr": "//*[@class='icon-area']/text()"
       },
       {
-        "name": "bedroom",
+        "name": "bed_rooms",
         "expr": "//*[@class='icon-bedroom']/text()"
       },
       {
-        "name": "bathroom",
+        "name": "bath_rooms",
         "expr": "//*[@class='icon-bathroom']/text()"
       },
       {
@@ -59,7 +59,7 @@
         "expr": "//*[@class='properties']/div[1]/p[1]/span/text()"
       },
       {
-        "name": "equipments",
+        "name": "equipment",
         "expr": "//*[@class='properties']/div[2]/p[4]/span/text()"
       },
       {

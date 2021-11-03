@@ -15,9 +15,8 @@ public class PropertyInfoDoc {
     @Field(PropertyInfoConstants.ID)
     private String id;
 
-    // Name of property name.
-    @Field(PropertyInfoConstants.PROPERTY_NAME)
-    private String propertyName;
+    @Field(PropertyInfoConstants.TITLE)
+    private String title;
 
     // Short summary of property.
     @Field(PropertyInfoConstants.SHORT_SUMMARY)
@@ -30,10 +29,16 @@ public class PropertyInfoDoc {
     private Integer unitArea;
 
     @Field(PropertyInfoConstants.TOTAL_PRICE)
-    private Long totalPrice;
+    private Double totalPrice;
+
+    @Field(PropertyInfoConstants.TOTAL_PRICE_CAL_UNIT)
+    private Integer totalPriceCalUnit;
 
     @Field(PropertyInfoConstants.UNIT_PRICE)
-    private Long unitPrice;
+    private Double unitPrice;
+
+    @Field(PropertyInfoConstants.UNIT_PRICE_CAL_UNIT)
+    private Integer unitPriceCalUnit;
 
     @Field(PropertyInfoConstants.PROVINCE_CODE)
     private String provinceCode;
@@ -45,8 +50,8 @@ public class PropertyInfoDoc {
     private String wardCode;
 
     // Raw property location.
-    @Field(PropertyInfoConstants.RAW_LOCATION)
-    private String rawLocation;
+    @Field(PropertyInfoConstants.LOCATION)
+    private String location;
 
     @Field(PropertyInfoConstants.PROPERTY_TYPE)
     private Integer propertyType;
@@ -64,14 +69,21 @@ public class PropertyInfoDoc {
     @Field(PropertyInfoConstants.BED_ROOMS)
     private Integer bedRooms;
 
+    @Field(PropertyInfoConstants.BATH_ROOMS)
+    private Integer bathRooms;
+
     @Field(PropertyInfoConstants.DIRECTION)
     private Integer direction;
 
-    @Field(PropertyInfoConstants.IMAGE_URLS)
-    private List<String> imageUrls;
+    @Field(PropertyInfoConstants.IMAGES)
+    private List<String> images;
 
     @Field(PropertyInfoConstants.PHONES)
     private List<String> phones;
+
+    // Name of property name.
+    @Field(PropertyInfoConstants.INVESTOR_PROJECT)
+    private String investorProject;
 
     @Field(PropertyInfoConstants.INVESTOR)
     private String investor;

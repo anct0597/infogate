@@ -1,4 +1,4 @@
-package vn.infogate.ispider.web.model;
+package vn.infogate.ispider.storage.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
@@ -16,19 +16,19 @@ public class LocationModel {
 
     private String province;
 
-    private String provinceId;
+    private String provinceCode;
 
     private String district;
 
-    private String districtId;
+    private String districtCode;
 
     private String ward;
 
-    private String wardId;
+    private String wardCode;
 
-    public LocationModel(String provinceId, String districtId, String wardId) {
-        this.provinceId = provinceId;
-        this.districtId = districtId;
-        this.wardId = wardId;
+    public LocationModel(String provinceCode, String districtCode, String wardCode) {
+        this.provinceCode = provinceCode;
+        this.districtCode = districtCode;
+        this.wardCode = wardCode;
     }
 }

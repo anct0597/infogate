@@ -1,6 +1,7 @@
 package vn.infogate.ispider.common.utils;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 public final class Utils {
@@ -27,5 +28,31 @@ public final class Utils {
         } else {
             c1.add(obj);
         }
+    }
+
+    public static String getAsStr(Map<String, Object> map, String key) {
+        var value = map.get(key);
+        return value == null ? null : String.valueOf(value);
+    }
+
+    public static Integer getAsInt(Map<String, Object> map, String key) {
+        var value = map.get(key);
+        return value == null ? null : (Integer) value;
+    }
+
+    public static Long getAsLong(Map<String, Object> map, String key) {
+        var value = map.get(key);
+        return value == null ? null : (Long) value;
+    }
+
+    public static Double getAsDouble(Map<String, Object> map, String key) {
+        var value = map.get(key);
+        return value == null ? null : (Double) value;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> List<T> getAsList(Map<String, Object> map, String key) {
+        var value = map.get(key);
+        return value == null ? null : (List<T>) value;
     }
 }

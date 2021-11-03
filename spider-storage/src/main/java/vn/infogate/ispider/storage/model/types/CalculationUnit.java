@@ -6,7 +6,7 @@ import lombok.Getter;
  * @author anct.
  */
 @Getter
-public enum PriceUnit {
+public enum CalculationUnit {
     TY(1, "tỷ"),
     TR(2, "triệu"),
     K(3, "nghìn");
@@ -14,7 +14,7 @@ public enum PriceUnit {
     private final int code;
     private final String viName;
 
-    PriceUnit(int code, String viName) {
+    CalculationUnit(int code, String viName) {
         this.code = code;
         this.viName = viName;
     }

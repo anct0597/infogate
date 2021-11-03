@@ -127,27 +127,44 @@
 
     <fieldType name="int" class="solr.IntPointField" docValues="true"/>
     <fieldType name="long" class="solr.TrieLongField" positionIncrementGap="0" docValues="false" precisionStep="0"/>
+    <fieldType name="double" class="solr.TrieDoubleField" positionIncrementGap="0" docValues="false" precisionStep="0"/>
 
     <field name="id" type="string" multiValued="false" indexed="true" required="true" stored="true"/>
-    <field name="property_name" type="string" multiValued="false" indexed="true" required="false" stored="true"/>
+    <field name="title" type="string" multiValued="false" indexed="false" required="false" stored="true"/>
     <field name="short_summary" type="string" multiValued="false" indexed="false" required="false" stored="true"/>
     <field name="area" type="pdouble" multiValued="false" indexed="false" required="false" stored="true"/>
     <field name="area_unit" type="int" multiValued="false" indexed="false" required="false" stored="true"/>
-    <field name="total_price" type="long" multiValued="false" indexed="false" required="false" stored="true"/>
-    <field name="unit_price" type="long" multiValued="false" indexed="false" required="false" stored="true"/>
+
+    <field name="total_price" type="double" multiValued="false" indexed="false" required="false" stored="true"/>
+    <field name="total_price_cal_unit" type="int" multiValued="false" indexed="false" required="false" stored="true"/>
+
+    <field name="unit_price" type="double" multiValued="false" indexed="false" required="false" stored="true"/>
+    <field name="unit_price_cal_unit" type="int" multiValued="false" indexed="false" required="false" stored="true"/>
+
     <field name="province_code" type="string" multiValued="false" indexed="false" required="false" stored="true"/>
     <field name="district_code" type="string" multiValued="false" indexed="false" required="false" stored="true"/>
     <field name="ward_code" type="string" multiValued="false" indexed="false" required="false" stored="true"/>
-    <field name="raw_location" type="text_general" multiValued="false" indexed="false" required="false" stored="true"/>
+
+    <field name="location" type="text_general" multiValued="false" indexed="false" required="false" stored="true"/>
+
     <field name="property_type" type="int" multiValued="false" indexed="false" required="false" stored="true"/>
+
     <field name="equipment" type="int" multiValued="false" indexed="false" required="false" stored="true"/>
+
     <field name="legal_status" type="int" multiValued="false" indexed="false" required="false" stored="true"/>
     <field name="url" type="string" multiValued="false" indexed="false" required="false" stored="true"/>
+
     <field name="bed_rooms" type="int" multiValued="false" indexed="false" required="false" stored="true"/>
+    <field name="bath_rooms" type="int" multiValued="false" indexed="false" required="false" stored="true"/>
+
     <field name="direction" type="int" multiValued="false" indexed="false" required="false" stored="true"/>
-    <field name="image_urls" type="string" multiValued="true" indexed="false" required="false" stored="true"/>
+    <field name="images" type="string" multiValued="true" indexed="false" required="false" stored="true"/>
     <field name="phones" type="string" multiValued="true" indexed="false" required="false" stored="true"/>
+
     <field name="investor" type="text_general" multiValued="false" indexed="false" required="false" stored="true"/>
+    <field name="investor_project" type="text_general" multiValued="false" indexed="false" required="false"
+           stored="true"/>
+
     <field name="source" type="text_general" multiValued="false" indexed="false" required="false" stored="true"/>
     <field name="publish_type" type="int" multiValued="false" indexed="false" required="false" stored="true"/>
     <field name="publisher" type="string" multiValued="false" indexed="false" required="false" stored="true"/>
