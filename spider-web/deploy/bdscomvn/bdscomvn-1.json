@@ -1,0 +1,75 @@
+{
+  "thread": 1,
+  "status": 0,
+  "pageModel": {
+    "targetUrls": [
+      "https://batdongsan.com.vn/ban-can-ho-chung-cu-[\\w\\-\/]+"
+    ],
+    "ignoreUrls": [],
+    "startUrls": [
+      "https://batdongsan.com.vn/ban-can-ho-chung-cu-duong-bo-bao-tan-thang-phuong-son-ky-prj-celadon-city/ban-nhanh-q-phu-2pn-2wc-68m2-o-ngay-co-so-ng-2-65-ty-0949-55-11-99-pr31298508"
+    ],
+    "pipelines": [
+      "vn.infogate.ispider.web.bdscomvn.BdsComVnModelGatherPipeline",
+      "vn.infogate.ispider.web.bdscomvn.BdsComVnStoragePipeline"
+    ],
+    "pageProcessor": "vn.infogate.ispider.web.bdscomvn.BdsComVnPageProcessor",
+    "fields": [
+      {
+        "name": "title",
+        "expr": "//*[@class='pr-title']/text()",
+        "required": true
+      },
+      {
+        "name": "phones",
+        "expr": "//*[@class='phoneEvent']/@data-mobile",
+        "required": true
+      },
+      {
+        "name": "area",
+        "expr": "//*[@id='product-detail-web']/div[1]/div[2]/[@class='value']/text()"
+      },
+      {
+        "name": "bed_rooms",
+        "expr": "//*[@id='product-detail-web']/div[3]/div/div[3]/span[2]/text()"
+      },
+      {
+        "name": "bath_rooms",
+        "expr": "//*[@class='icon-bathroom']/text()"
+      },
+      {
+        "name": "direction",
+        "expr": "//*[@class='icon-direction']/text()"
+      },
+      {
+        "name": "location",
+        "expr": "//*[@id='product-detail-web']/div[3]/div/div[2]/span[2]/text()"
+      },
+      {
+        "name": "unit_price",
+        "expr": "//*[@id='product-detail-web']/div[1]/div[1]/span[3]/text()"
+      },
+      {
+        "name": "total_price",
+        "expr": "//*[@id='product-detail-web']/div[1]/div[1]/span[2]/text()"
+      },
+      {
+        "name": "property_type",
+        "expr": "//*[@class='properties']/div[1]/p[1]/span/text()"
+      },
+      {
+        "name": "equipment",
+        "expr": "//*[@class='properties']/div[2]/p[4]/span/text()"
+      },
+      {
+        "name": "legal_status",
+        "expr": "//*[@id='product-detail-web']/div[3]/div/div[5]/span[2]/text()"
+      },
+      {
+        "name": "images",
+        "expr": "//*[@class='slick-track']/img/@data-src",
+        "multi": true
+      }
+    ]
+  }
+}

@@ -1,6 +1,5 @@
-package vn.infogate.ispider.web.pipeline;
+package vn.infogate.ispider.web.cenhome;
 
-import vn.infogate.ispider.web.collectors.CenHomeCollectors;
 import vn.infogate.ispider.json.JsonModelGatherPipeline;
 
 /**

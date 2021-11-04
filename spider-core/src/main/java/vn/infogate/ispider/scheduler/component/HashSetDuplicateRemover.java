@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class HashSetDuplicateRemover implements DuplicateRemover {
 
-    private Set<String> urls = Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
+    private final Set<String> urls = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
     @Override
     public boolean isDuplicate(Request request, Task task) {

@@ -1,5 +1,7 @@
 package vn.infogate.ispider.downloader;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import vn.infogate.ispider.Page;
 import vn.infogate.ispider.Request;
@@ -7,85 +9,26 @@ import vn.infogate.ispider.Task;
 import vn.infogate.ispider.selector.PlainText;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-/**
- * this downloader is used to download pages which need to render the javascript
- *
- * @author dolphineor@gmail.com
- * @version 0.5.3
- */
+
 @Slf4j
+@Getter
+@Setter
 public class PhantomJSDownloader extends AbstractDownloader {
 
-    private static String crawlJsPath;
-    private static String phantomJsCommand = "phantomjs"; // default
-
     private int retryNum;
-    private int threadNum;
+    private final String crawlJsPath;
+    private static String phantomJsCommand = "spider-web/phantomjs/bin/phantomjs.exe"; // default
 
     public PhantomJSDownloader() {
-        this.initPhantomjsCrawlPath();
+        this.crawlJsPath = "spider-web/config/crawl.js";// default
     }
-    
-    /**
-     * 添加新的构造函数，支持phantomjs自定义命令
-     * 
-     * example: 
-     *    phantomjs.exe 支持windows环境
-     *    phantomjs --ignore-ssl-errors=yes 忽略抓取地址是https时的一些错误
-     *    /usr/local/bin/phantomjs 命令的绝对路径，避免因系统环境变量引起的IOException
-     *   
-     * @param phantomJsCommand phantomJsCommand
-     */
-    public PhantomJSDownloader(String phantomJsCommand) {
-        this.initPhantomjsCrawlPath();
-        PhantomJSDownloader.phantomJsCommand = phantomJsCommand;
-    }
-    
-    /**
-     * 新增构造函数，支持crawl.js路径自定义，因为当其他项目依赖此jar包时，runtime.exec()执行phantomjs命令时无使用法jar包中的crawl.js
-     * <pre>
-     * crawl.js start --
-     * 
-     *   var system = require('system');
-     *   var url = system.args[1];
-     *   
-     *   var page = require('webpage').create();
-     *   page.settings.loadImages = false;
-     *   page.settings.resourceTimeout = 5000;
-     *   
-     *   page.open(url, function (status) {
-     *       if (status != 'success') {
-     *           console.log("HTTP request failed!");
-     *       } else {
-     *           console.log(page.content);
-     *       }
-     *   
-     *       page.close();
-     *       phantom.exit();
-     *   });
-     *   
-     * -- crawl.js end
-     * </pre>
-     * 具体项目时可以将以上js代码复制下来使用
-     *   
-     * example:
-     *    new PhantomJSDownloader("/your/path/phantomjs", "/your/path/crawl.js");
-     * 
-     * @param phantomJsCommand phantomJsCommand
-     * @param crawlJsPath crawlJsPath
-     */
-    public PhantomJSDownloader(String phantomJsCommand, String crawlJsPath) {
-      PhantomJSDownloader.phantomJsCommand = phantomJsCommand;
-      PhantomJSDownloader.crawlJsPath = crawlJsPath;
-    }
-    
-    private void initPhantomjsCrawlPath() {
-        PhantomJSDownloader.crawlJsPath = new File(this.getClass().getResource("/").getPath()).getPath() + System.getProperty("file.separator") + "crawl.js ";
+
+    public PhantomJSDownloader(String crawlJsPath) {
+        this.crawlJsPath = crawlJsPath;
     }
 
     @Override
@@ -95,7 +38,7 @@ public class PhantomJSDownloader extends AbstractDownloader {
         }
         String content = getPage(request);
         if (content.contains("HTTP request failed")) {
-            for (int i = 1; i <= getRetryNum(); i++) {
+            for (int i = 1; i <= retryNum; i++) {
                 content = getPage(request);
                 if (!content.contains("HTTP request failed")) {
                     break;
@@ -119,7 +62,7 @@ public class PhantomJSDownloader extends AbstractDownloader {
 
     @Override
     public void setThread(int threadNum) {
-        this.threadNum = threadNum;
+        // Just implement
     }
 
     protected String getPage(Request request) {
@@ -128,8 +71,8 @@ public class PhantomJSDownloader extends AbstractDownloader {
             Runtime runtime = Runtime.getRuntime();
             Process process = runtime.exec(phantomJsCommand + " " + crawlJsPath + " " + url);
             InputStream is = process.getInputStream();
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            StringBuffer stringBuffer = new StringBuffer();
+            var br = new BufferedReader(new InputStreamReader(is));
+            var stringBuffer = new StringBuilder();
             String line;
             while ((line = br.readLine()) != null) {
                 stringBuffer.append(line).append("\n");
@@ -140,15 +83,6 @@ public class PhantomJSDownloader extends AbstractDownloader {
         }
 
         return null;
-    }
-
-    public int getRetryNum() {
-        return retryNum;
-    }
-
-    public PhantomJSDownloader setRetryNum(int retryNum) {
-        this.retryNum = retryNum;
-        return this;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package vn.infogate.ispider.web.collectors;
+package vn.infogate.ispider.web.w3;
 
 import org.apache.commons.lang3.tuple.Pair;
 import vn.infogate.ispider.json.JsonFieldCollector;
@@ -6,6 +6,7 @@ import vn.infogate.ispider.storage.model.document.PropertyInfoConstants;
 import vn.infogate.ispider.storage.model.entity.LocationModel;
 import vn.infogate.ispider.storage.model.entity.PriceModel;
 import vn.infogate.ispider.storage.model.types.*;
+import vn.infogate.ispider.web.collectors.CommonCollectors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * @author anct.
  */
-public enum CenHomeCollectors implements JsonFieldCollector {
+public enum W3Collectors implements JsonFieldCollector {
 
     AREA {
         @Override

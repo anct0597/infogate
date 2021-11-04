@@ -1,4 +1,4 @@
-package vn.infogate.ispider.web.processors;
+package vn.infogate.ispider.web.w3;
 
 import lombok.extern.slf4j.Slf4j;
 import vn.infogate.ispider.Page;
@@ -8,7 +8,7 @@ import vn.infogate.ispider.json.JsonPageProcessor;
 
 @Slf4j
 @JsonPageProcessor
-public class CenHomePageProcessor extends JsonDefinedPageProcessor {
+public class W3PageProcessor extends JsonDefinedPageProcessor {
 
     @Override
     public Site getSite() {

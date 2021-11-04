@@ -50,9 +50,7 @@ public class CountableThreadPool {
 
     private ExecutorService executorService;
 
-    public void execute(final Runnable runnable) {
-
-
+    public void execute(Runnable runnable) {
         if (threadAlive.get() >= threadNum) {
             try {
                 reentrantLock.lock();

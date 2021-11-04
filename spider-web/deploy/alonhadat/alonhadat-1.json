@@ -1,0 +1,70 @@
+{
+  "thread": 1,
+  "status": 1,
+  "pageModel": {
+    "targetUrls": [
+      "https://alonhadat.com.vn/[\\w\\-/]+.html"
+    ],
+    "ignoreUrls": [],
+    "startUrls": [
+      "https://alonhadat.com.vn/ban-nha-duong-quang-trung-p-8-go-vap-4x12m-1-tret-1-lau-3-95-ty-9318451.html"
+    ],
+    "pipelines": [
+      "vn.infogate.ispider.web.w3.W3ModelGatherPipeline",
+      "vn.infogate.ispider.web.w3.W3StoragePipeline"
+    ],
+    "pageProcessor": "vn.infogate.ispider.web.w3.W3PageProcessor",
+    "fields": [
+      {
+        "name": "title",
+        "expr": "//*[@class='title']/h1/text()",
+        "required": true
+      },
+      {
+        "name": "phones",
+        "expr": "//*[@class='fone']/a/text()"
+      },
+      {
+        "name": "area",
+        "expr": "//*[@class='square']/span[2]/text()"
+      },
+      {
+        "name": "bed_rooms",
+        "expr": "//*[@id='left']/div[1]/div[5]/div[2]/table/tbody/tr[5]/td[4]/text()"
+      },
+      {
+        "name": "bath_rooms",
+        "expr": "//*[@class='icon-bathroom']/text()"
+      },
+      {
+        "name": "direction",
+        "expr": "//*[@id='left']/div[1]/div[5]/div[2]/table/tbody/tr[1]/td[4]/text()"
+      },
+      {
+        "name": "location",
+        "expr": "//*[@class='address']/span[2]/text()"
+      },
+      {
+        "name": "total_price",
+        "expr": "//*[@class='price']/span[2]/text()"
+      },
+      {
+        "name": "property_type",
+        "expr": "//*[@class='properties']/div[1]/p[1]/span/text()"
+      },
+      {
+        "name": "equipment",
+        "expr": "//*[@class='properties']/div[2]/p[4]/span/text()"
+      },
+      {
+        "name": "legal_status",
+        "expr": "//*[@id='product-detail-web']/div[3]/div/div[5]/span[2]/text()"
+      },
+      {
+        "name": "images",
+        "expr": "//*[@class='slick-track']/img/@data-src",
+        "multi": true
+      }
+    ]
+  }
+}

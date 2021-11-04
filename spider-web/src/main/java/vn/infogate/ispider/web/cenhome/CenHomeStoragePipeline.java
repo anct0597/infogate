@@ -1,4 +1,4 @@
-package vn.infogate.ispider.web.pipeline;
+package vn.infogate.ispider.web.cenhome;
 
 import lombok.extern.slf4j.Slf4j;
 import vn.infogate.ispider.ResultItems;

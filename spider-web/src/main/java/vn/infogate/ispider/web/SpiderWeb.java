@@ -43,7 +43,7 @@ public class SpiderWeb {
     public static void main(String[] args) throws Exception {
         var mapper = ObjectMapperFactory.getInstance();
 
-        Files.list(Path.of(DEFAULT_DEPLOY_FOLDER)).forEach(file -> {
+        Files.walk(Path.of(DEFAULT_DEPLOY_FOLDER)).filter(path -> path.toFile().isFile()).forEach(file -> {
             try {
                 var value = Files.readString(file.toAbsolutePath());
                 var spiderConfig = mapper.readValue(value, JsonSpiderConfig.class);
@@ -53,6 +53,7 @@ public class SpiderWeb {
                     var pageProcessor = newPageProcessorInstance(pageModel);
                     var pipelines = createPipelines(pageModel);
                     Spider.create(pageProcessor)
+//                            .setDownloader(new PhantomJSDownloader())
                             .setPipelines(pipelines)
                             .addUrl(pageModel.getStartUrls())
                             .thread(spiderConfig.getThread())

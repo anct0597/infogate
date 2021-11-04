@@ -1,6 +1,6 @@
 {
   "thread": 1,
-  "status": 1,
+  "status": 0,
   "pageModel": {
     "targetUrls": [
       "https://cenhomes.vn/mua-nha/[a-zA-Z-0-9]+",
@@ -8,13 +8,14 @@
     ],
     "ignoreUrls": [],
     "startUrls": [
-      "https://cenhomes.vn/mua-nha/ban-nha-lien-ke-my-dinh-oto-tranh-kd-130m-4t-mt4-5m-18ty-10328489"
+      "https://cenhomes.vn/mua-nha/ban-nha-lien-ke-my-dinh-oto-tranh-kd-130m-4t-mt4-5m-18ty-10328489",
+      "https://cenhomes.vn/thue-nha/3n-100m2-chi-14-5tr-tai-goldmark-city-10330405"
     ],
     "pipelines": [
-      "vn.infogate.ispider.web.pipeline.CenHomeModelGatherPipeline",
-      "vn.infogate.ispider.web.pipeline.CenHomeStoragePipeline"
+      "vn.infogate.ispider.web.cenhome.CenHomeModelGatherPipeline",
+      "vn.infogate.ispider.web.cenhome.CenHomeStoragePipeline"
     ],
-    "pageProcessor": "vn.infogate.ispider.web.processors.CenHomePageProcessor",
+    "pageProcessor": "vn.infogate.ispider.web.cenhome.CenHomePageProcessor",
     "fields": [
       {
         "name": "title",

@@ -18,7 +18,6 @@ public class PropertyInfoDoc {
     @Field(PropertyInfoConstants.TITLE)
     private String title;
 
-    // Short summary of property.
     @Field(PropertyInfoConstants.SHORT_SUMMARY)
     private String shortSummary;
 
@@ -49,7 +48,6 @@ public class PropertyInfoDoc {
     @Field(PropertyInfoConstants.WARD_CODE)
     private String wardCode;
 
-    // Raw property location.
     @Field(PropertyInfoConstants.LOCATION)
     private String location;
 
