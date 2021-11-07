@@ -1,6 +1,5 @@
 package vn.infogate.ispider.web.w3;
 
-import org.apache.commons.lang3.tuple.Pair;
 import vn.infogate.ispider.json.JsonFieldCollector;
 import vn.infogate.ispider.storage.model.document.PropertyInfoConstants;
 import vn.infogate.ispider.storage.model.entity.LocationModel;
@@ -8,8 +7,8 @@ import vn.infogate.ispider.storage.model.entity.PriceModel;
 import vn.infogate.ispider.storage.model.types.*;
 import vn.infogate.ispider.web.collectors.CommonCollectors;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author anct.
@@ -26,6 +25,28 @@ public enum W3Collectors implements JsonFieldCollector {
         public Double collect(Object raw) {
             var matcher = Regex.AREA.matcher(String.valueOf(raw));
             return matcher.find() ? Double.parseDouble(matcher.group(1)) : 0.0;
+        }
+    },
+    WIDTH {
+        @Override
+        public String extractFrom() {
+            return PropertyInfoConstants.WIDTH;
+        }
+
+        @Override
+        public Double collect(Object raw) {
+            return CommonCollectors.extractAsDouble(raw);
+        }
+    },
+    LENGTH {
+        @Override
+        public String extractFrom() {
+            return PropertyInfoConstants.LENGTH;
+        }
+
+        @Override
+        public Double collect(Object raw) {
+            return CommonCollectors.extractAsDouble(raw);
         }
     },
     AREA_UNIT {
@@ -49,12 +70,7 @@ public enum W3Collectors implements JsonFieldCollector {
     PHONE {
         @Override
         public List<String> collect(Object raw) {
-            var matcher = Regex.PHONE.matcher(String.valueOf(raw));
-            var phones = new ArrayList<String>(2);
-            while (matcher.find()) {
-                phones.add(matcher.group(1));
-            }
-            return phones;
+            return CommonCollectors.extractPhones(raw);
         }
 
         @Override
@@ -65,8 +81,7 @@ public enum W3Collectors implements JsonFieldCollector {
     BED_ROOM {
         @Override
         public Integer collect(Object raw) {
-            var matcher = Regex.NUMBER.matcher(String.valueOf(raw));
-            return matcher.find() ? Integer.parseInt(matcher.group(1)) : 0;
+            return CommonCollectors.extractAsInt(raw);
         }
 
         @Override
@@ -74,11 +89,32 @@ public enum W3Collectors implements JsonFieldCollector {
             return PropertyInfoConstants.BED_ROOMS;
         }
     },
+    FLOORS {
+        @Override
+        public Integer collect(Object raw) {
+            return CommonCollectors.extractAsInt(raw);
+        }
+
+        @Override
+        public String extractFrom() {
+            return PropertyInfoConstants.FLOORS;
+        }
+    },
+    KITCHEN {
+        @Override
+        public Integer collect(Object raw) {
+            return CommonCollectors.check(raw, Objects::nonNull);
+        }
+
+        @Override
+        public String extractFrom() {
+            return PropertyInfoConstants.KITCHEN;
+        }
+    },
     BATH_ROOM {
         @Override
         public Integer collect(Object raw) {
-            var matcher = Regex.NUMBER.matcher(String.valueOf(raw));
-            return matcher.find() ? Integer.parseInt(matcher.group(1)) : 0;
+            return CommonCollectors.extractAsInt(raw);
         }
 
         @Override
@@ -95,28 +131,6 @@ public enum W3Collectors implements JsonFieldCollector {
         @Override
         public String extractFrom() {
             return PropertyInfoConstants.DIRECTION;
-        }
-    },
-    UNIT_PRICE {
-        @Override
-        public PriceModel collect(Object raw) {
-            return CommonCollectors.extractPrice(raw);
-        }
-
-        @Override
-        public String extractFrom() {
-            return PropertyInfoConstants.UNIT_PRICE;
-        }
-    },
-    RANGE_PRICE {
-        @Override
-        public Pair<PriceModel, PriceModel> collect(Object raw) {
-            return CommonCollectors.extractRangePrice(raw);
-        }
-
-        @Override
-        public String extractFrom() {
-            return PropertyInfoConstants.RANGE_PRICE;
         }
     },
     PRICE {
@@ -141,21 +155,10 @@ public enum W3Collectors implements JsonFieldCollector {
             return PropertyInfoConstants.PROPERTY_TYPE;
         }
     },
-    EQUIPMENT {
-        @Override
-        public Integer collect(Object raw) {
-            return PropertyEquipment.getCode(String.valueOf(raw));
-        }
-
-        @Override
-        public String extractFrom() {
-            return PropertyInfoConstants.EQUIPMENT;
-        }
-    },
     LEGAL_STATUS {
         @Override
         public Integer collect(Object raw) {
-            return CommonCollectors.extractLegalStatus(raw);
+            return PropertyLegalStatus.getCode(String.valueOf(raw));
         }
 
         @Override
@@ -177,6 +180,28 @@ public enum W3Collectors implements JsonFieldCollector {
         @Override
         public String extractFrom() {
             return PropertyInfoConstants.LOCATION;
+        }
+    },
+    PUBLISHER_TYPE {
+        @Override
+        public Integer collect(Object raw) {
+            return PublisherType.getCode(String.valueOf(raw));
+        }
+
+        @Override
+        public String extractFrom() {
+            return PropertyInfoConstants.PUBLISHER_TYPE;
+        }
+    },
+    PUBLISH_TYPE {
+        @Override
+        public Integer collect(Object raw) {
+            return PublishType.getCodeFromName(String.valueOf(raw));
+        }
+
+        @Override
+        public String extractFrom() {
+            return PropertyInfoConstants.PUBLISH_TYPE;
         }
     }
 }

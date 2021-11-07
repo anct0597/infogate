@@ -1,4 +1,4 @@
-package vn.infogate.ispider.web.utils;
+package vn.infogate.ispider.common.utils;
 
 import org.apache.commons.lang3.StringUtils;
 

@@ -3,19 +3,18 @@ package vn.infogate.ispider.storage.model.types;
 import lombok.Getter;
 
 /**
- * @author anct.
+ * @author an.cantuong
+ * created at 11/2/2021
  */
 @Getter
-public enum PropertyLegalStatus {
-    SD_LD(1, "Sổ đỏ lâu dài"),
-    SH(2, "Sổ đỏ lâu dài"),
-    SD_SH(3, "Sổ hồng/ Sổ đỏ"),
-    GT_HL(3, "Giấy tờ hợp lệ");
+public enum PublisherType {
+    OWNER(1, "Chính chủ"),
+    BROKER(2, "Môi giới");
 
     private final int code;
     private final String viName;
 
-    PropertyLegalStatus(int code, String viName) {
+    PublisherType(int code, String viName) {
         this.code = code;
         this.viName = viName;
     }
@@ -26,6 +25,6 @@ public enum PropertyLegalStatus {
                 return type.getCode();
             }
         }
-        return null;
+        return BROKER.code;
     }
 }

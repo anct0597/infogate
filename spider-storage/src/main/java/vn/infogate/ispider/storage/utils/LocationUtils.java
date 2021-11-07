@@ -1,11 +1,12 @@
-package vn.infogate.ispider.web.utils;
+package vn.infogate.ispider.storage.utils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 import lombok.extern.slf4j.Slf4j;
+import vn.infogate.ispider.common.objectmapper.ObjectMapperFactory;
+import vn.infogate.ispider.common.utils.VNCharacterUtils;
 import vn.infogate.ispider.storage.model.entity.LocationModel;
-import vn.infogate.ispider.utils.ObjectMapperFactory;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -55,22 +56,22 @@ public class LocationUtils {
 
     private String getShortDistrict(String wardText) {
         return wardText
-                .replace("thanh pho", "")
-                .replace("thi tran", "")
-                .replace("quan", "")
-                .replace("huyen", "");
+                .replaceFirst("^(thanh pho)", "")
+                .replaceFirst("^(thi tran)", "")
+                .replaceFirst("^(quan)", "")
+                .replaceFirst("^(huyen)", "");
     }
 
     private String getShortWardText(String wardText) {
         return wardText
-                .replace("phuong", "")
-                .replace("xa", "");
+                .replaceFirst("^(phuong)", "")
+                .replaceFirst("^(xa)", "");
     }
 
     private String getShortProvinceText(String provinceText) {
         return provinceText
-                .replace("thanh pho", "")
-                .replace("tinh", "");
+                .replaceFirst("^(thanh pho)", "")
+                .replaceFirst("^(tinh)", "");
     }
 
     private void initLocation() {

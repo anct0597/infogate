@@ -1,4 +1,4 @@
-package vn.infogate.ispider.web.cenhome;
+package vn.infogate.ispider.web.w1;
 
 import lombok.extern.slf4j.Slf4j;
 import vn.infogate.ispider.ResultItems;
@@ -11,11 +11,11 @@ import vn.infogate.ispider.storage.transfomer.PropertyInfoTransformer;
  * @author anct.
  */
 @Slf4j
-public class CenHomeStoragePipeline implements Pipeline {
+public class W1StoragePipeline implements Pipeline {
 
     private final PropertyInfoRepo propertyInfoRepo;
 
-    public CenHomeStoragePipeline() {
+    public W1StoragePipeline() {
         this.propertyInfoRepo = PropertyInfoRepo.getInstance();
     }
 

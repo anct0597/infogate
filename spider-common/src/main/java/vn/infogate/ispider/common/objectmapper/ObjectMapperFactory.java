@@ -1,4 +1,4 @@
-package vn.infogate.ispider.utils;
+package vn.infogate.ispider.common.objectmapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

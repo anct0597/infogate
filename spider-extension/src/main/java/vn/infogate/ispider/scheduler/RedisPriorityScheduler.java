@@ -8,7 +8,7 @@ import redis.clients.jedis.JedisPool;
 import vn.infogate.ispider.Request;
 import vn.infogate.ispider.Task;
 import vn.infogate.ispider.utils.JsonUtils;
-import vn.infogate.ispider.utils.ObjectMapperFactory;
+import vn.infogate.ispider.common.objectmapper.ObjectMapperFactory;
 
 import java.util.Set;
 

@@ -1,4 +1,4 @@
-package vn.infogate.ispider.web.bdscomvn;
+package vn.infogate.ispider.web.w2;
 
 import lombok.extern.slf4j.Slf4j;
 import vn.infogate.ispider.Page;
@@ -8,7 +8,7 @@ import vn.infogate.ispider.json.JsonPageProcessor;
 
 @Slf4j
 @JsonPageProcessor
-public class BdsComVnPageProcessor extends JsonDefinedPageProcessor {
+public class W2PageProcessor extends JsonDefinedPageProcessor {
 
     @Override
     public Site getSite() {

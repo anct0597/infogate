@@ -19,12 +19,12 @@ public enum PropertyEquipment {
         this.viName = viName;
     }
 
-    public static int getCode(String viName) {
+    public static Integer getCode(String viName) {
         for (var type : values()) {
             if (type.getViName().equalsIgnoreCase(viName)) {
                 return type.getCode();
             }
         }
-        return 0;
+        return null;
     }
 }

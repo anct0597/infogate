@@ -10,9 +10,10 @@
       "https://cenhomes.vn/du-an/chung-cu-cao-tang-ho-sinh-thai-dam-dong-da-phu-tai-residence-10000351"
     ],
     "pipelines": [
-      "vn.infogate.ispider.web.cenhome.CenHomeModelGatherPipeline"
+      "vn.infogate.ispider.web.w1.W1ModelGatherPipeline",
+      "vn.infogate.ispider.web.w1.W1StoragePipeline"
     ],
-    "pageProcessor": "vn.infogate.ispider.web.cenhome.CenHomePageProcessor",
+    "pageProcessor": "vn.infogate.ispider.web.w1.W1PageProcessor",
     "fields": [
       {
         "name": "title",
@@ -47,6 +48,10 @@
       {
         "name": "range_area",
         "expr": "//*[@id='information-tab']/p[7]/span/text()"
+      },
+      {
+        "name": "publish_type",
+        "expr": "//*[@class='breadcrumb']/li[2]/a/text()"
       }
     ]
   }

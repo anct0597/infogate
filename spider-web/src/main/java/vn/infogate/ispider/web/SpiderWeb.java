@@ -6,7 +6,7 @@ import vn.infogate.ispider.json.JsonDefinedPageProcessor;
 import vn.infogate.ispider.json.JsonPageModel;
 import vn.infogate.ispider.json.JsonSpiderConfig;
 import vn.infogate.ispider.pipeline.Pipeline;
-import vn.infogate.ispider.utils.ObjectMapperFactory;
+import vn.infogate.ispider.common.objectmapper.ObjectMapperFactory;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

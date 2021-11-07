@@ -3,7 +3,7 @@ package vn.infogate.ispider.selector;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import us.codecraft.xsoup.XTokenQueue;
-import vn.infogate.ispider.utils.ObjectMapperFactory;
+import vn.infogate.ispider.common.objectmapper.ObjectMapperFactory;
 
 import java.util.List;
 

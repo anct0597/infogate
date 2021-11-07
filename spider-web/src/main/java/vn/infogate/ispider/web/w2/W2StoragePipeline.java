@@ -1,4 +1,4 @@
-package vn.infogate.ispider.web.bdscomvn;
+package vn.infogate.ispider.web.w2;
 
 import lombok.extern.slf4j.Slf4j;
 import vn.infogate.ispider.ResultItems;
@@ -11,11 +11,11 @@ import vn.infogate.ispider.storage.transfomer.PropertyInfoTransformer;
  * @author anct.
  */
 @Slf4j
-public class BdsComVnStoragePipeline implements Pipeline {
+public class W2StoragePipeline implements Pipeline {
 
     private final PropertyInfoRepo propertyInfoRepo;
 
-    public BdsComVnStoragePipeline() {
+    public W2StoragePipeline() {
         this.propertyInfoRepo = PropertyInfoRepo.getInstance();
     }
 

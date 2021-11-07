@@ -30,6 +30,15 @@ public class PropertyInfoDoc {
     @Field(PropertyInfoConstants.TOTAL_PRICE)
     private Double totalPrice;
 
+    @Field(PropertyInfoConstants.WIDTH)
+    private Double width;
+
+    @Field(PropertyInfoConstants.LENGTH)
+    private Double length;
+
+    @Field(PropertyInfoConstants.KITCHEN)
+    private Integer floors;
+
     @Field(PropertyInfoConstants.TOTAL_PRICE_CAL_UNIT)
     private Integer totalPriceCalUnit;
 
@@ -70,6 +79,12 @@ public class PropertyInfoDoc {
     @Field(PropertyInfoConstants.BATH_ROOMS)
     private Integer bathRooms;
 
+    @Field(PropertyInfoConstants.KITCHEN)
+    private Integer kitchen;
+
+    @Field(PropertyInfoConstants.LIVING_ROOMS)
+    private Integer livingRooms;
+
     @Field(PropertyInfoConstants.DIRECTION)
     private Integer direction;
 
@@ -90,9 +105,13 @@ public class PropertyInfoDoc {
     @Field(PropertyInfoConstants.SOURCE_INFO)
     private String source;
 
-    // From Broker or property owner.
+    // Sell or rent
     @Field(PropertyInfoConstants.PUBLISH_TYPE)
     private Integer publishType;
+
+    // Property owner or Broker
+    @Field(PropertyInfoConstants.PUBLISHER_TYPE)
+    private Integer publisherType;
 
     // Phone number of publisher.
     @Field(PropertyInfoConstants.PUBLISHER)

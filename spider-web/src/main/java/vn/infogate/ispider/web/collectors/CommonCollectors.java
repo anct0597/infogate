@@ -2,22 +2,64 @@ package vn.infogate.ispider.web.collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import vn.infogate.ispider.common.normalizer.TextNormalizer;
+import vn.infogate.ispider.common.utils.VNCharacterUtils;
 import vn.infogate.ispider.storage.model.entity.LocationModel;
 import vn.infogate.ispider.storage.model.entity.PriceModel;
-import vn.infogate.ispider.web.normalizer.TextNormalizer;
 import vn.infogate.ispider.storage.model.types.CalculationUnit;
-import vn.infogate.ispider.storage.model.types.PropertyLegalStatus;
 import vn.infogate.ispider.storage.model.types.Regex;
-import vn.infogate.ispider.web.utils.LocationUtils;
-import vn.infogate.ispider.web.utils.VNCharacterUtils;
+import vn.infogate.ispider.storage.utils.LocationUtils;
+
+import java.text.Normalizer;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * @author anct.
  */
 public class CommonCollectors {
 
+    public static Integer extractAsInt(Object raw) {
+        return extractAsInt(raw, null);
+    }
+
+    public static Integer extractAsInt(Object raw, Integer defaultValue) {
+        var matcher = Regex.NUMBER.matcher(String.valueOf(raw));
+        return matcher.find() ? Integer.parseInt(matcher.group(1)) : defaultValue;
+    }
+
+    public static Double extractAsDouble(Object raw) {
+        var matcher = Regex.NUMBER.matcher(String.valueOf(raw));
+        return matcher.find() ? Double.parseDouble(matcher.group(1)) : 0.0;
+    }
+
+    public static Integer check(Object raw, Predicate<Object> predicate) {
+        return predicate.test(raw) ? 1 : null;
+    }
+
+    public static List<String> extractPhones(Object... raws) {
+        var phones = new ArrayList<String>(raws.length);
+        for (var raw : raws) {
+            var result = extractPhone(raw);
+            if (StringUtils.isNotEmpty(result)) phones.add(result);
+        }
+        return phones;
+    }
+
+    public static String extractPhone(Object raw) {
+        var text = String.valueOf(raw);
+        var rawPhone = TextNormalizer.removeCommaDot(text).toLowerCase();
+        var matcher = Regex.PHONE.matcher(rawPhone);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+        return rawPhone.contains("xxx") ? rawPhone : null;
+    }
+
     public static LocationModel extractDetailLocation(String raw) {
-        var text = VNCharacterUtils.removeAccent(raw).toLowerCase();
+        var normalizedText = Normalizer.normalize(raw.toLowerCase(), Normalizer.Form.NFC);
+        var text = VNCharacterUtils.removeAccent(normalizedText);
         return LocationUtils.getInstance().detectLocation(text);
     }
 
@@ -34,10 +76,6 @@ public class CommonCollectors {
 
         }
         return null;
-    }
-
-    public static int extractLegalStatus(Object raw) {
-        return PropertyLegalStatus.getCode(String.valueOf(raw));
     }
 
     private static PriceModel extractWithCertainUnit(String rawPrice, String unit) {

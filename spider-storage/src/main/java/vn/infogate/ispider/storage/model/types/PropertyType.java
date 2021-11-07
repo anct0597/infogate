@@ -13,28 +13,33 @@ public enum PropertyType {
     CONDO_TEL(4, "Condotel"),
     LIVING_HOUSE(5, "Nhà ở"),
     STREET_HOUSE(6, "Nhà mặt tiền"),
-    VILLA(7, "Nhà liền kề & Biệt thự"),
-    SHOP_HOUSE(8, "Shophouse"),
+    VILLA(7, "Nhà liền kề & Biệt thự", "Biệt thự, nhà liền kề"),
+    SHOP_HOUSE(8, "Shophouse", "Shop, kiot, quán", "Kiot"),
     LIVING_LAND(9, "Đất ở"),
     SELL_LAND(10, "Đất nền dự án"),
-    AGRI_LAND(11, "Đất nông nghiệp"),
+    RESIDENTIAL_LAND(10, "Đất thổ cư", "Đất ở", "Đất thổ cư, đất ở"),
+    AGRI_LAND(11, "Đất nông nghiệp", "Đất nông, lâm nghiệp"),
     FARM_LAND(12, "Trang trại"),
-    HOTEL_MOTEL(13, "Khách sạn");
+    HOTEL_MOTEL(13, "Khách sạn"),
+    OFFICE(13, "Văn phòng"),
+    WARE_HOUSE(13, "Kho, xưởng", "Kho", "Xưởng");
 
     private final int code;
-    private final String viName;
+    private final String[] viNames;
 
-    PropertyType(int code, String viName) {
+    PropertyType(int code, String... viNames) {
         this.code = code;
-        this.viName = viName;
+        this.viNames = viNames;
     }
 
-    public static int getCodeFromViName(String viName) {
+    public static Integer getCodeFromViName(String text) {
         for (var type : values()) {
-            if (type.getViName().equalsIgnoreCase(viName)) {
-                return type.getCode();
+            for (var name : type.viNames) {
+                if (name.equalsIgnoreCase(text)) {
+                    return type.code;
+                }
             }
         }
-        return 0;
+        return null;
     }
 }

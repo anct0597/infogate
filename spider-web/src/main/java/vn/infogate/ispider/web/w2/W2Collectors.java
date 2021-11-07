@@ -1,4 +1,4 @@
-package vn.infogate.ispider.web.cenhome;
+package vn.infogate.ispider.web.w2;
 
 import org.apache.commons.lang3.tuple.Pair;
 import vn.infogate.ispider.json.JsonFieldCollector;
@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author anct.
  */
-public enum CenHomeCollectors implements JsonFieldCollector {
+public enum W2Collectors implements JsonFieldCollector {
 
     AREA {
         @Override
@@ -155,7 +155,7 @@ public enum CenHomeCollectors implements JsonFieldCollector {
     LEGAL_STATUS {
         @Override
         public Integer collect(Object raw) {
-            return CommonCollectors.extractLegalStatus(raw);
+            return PropertyLegalStatus.getCode(String.valueOf(raw));
         }
 
         @Override

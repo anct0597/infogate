@@ -8,11 +8,9 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import vn.infogate.ispider.Request;
 import vn.infogate.ispider.Task;
-import vn.infogate.ispider.scheduler.DuplicateRemovedScheduler;
-import vn.infogate.ispider.scheduler.MonitoredScheduler;
 import vn.infogate.ispider.scheduler.component.DuplicateRemover;
 import vn.infogate.ispider.utils.JsonUtils;
-import vn.infogate.ispider.utils.ObjectMapperFactory;
+import vn.infogate.ispider.common.objectmapper.ObjectMapperFactory;
 
 /**
  * Use Redis as url scheduler for distributed crawlers.<br>

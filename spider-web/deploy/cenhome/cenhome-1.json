@@ -1,6 +1,6 @@
 {
   "thread": 1,
-  "status": 0,
+  "status": 1,
   "pageModel": {
     "targetUrls": [
       "https://cenhomes.vn/mua-nha/[a-zA-Z-0-9]+",
@@ -12,10 +12,10 @@
       "https://cenhomes.vn/thue-nha/3n-100m2-chi-14-5tr-tai-goldmark-city-10330405"
     ],
     "pipelines": [
-      "vn.infogate.ispider.web.cenhome.CenHomeModelGatherPipeline",
-      "vn.infogate.ispider.web.cenhome.CenHomeStoragePipeline"
+      "vn.infogate.ispider.web.w1.W1ModelGatherPipeline",
+      "vn.infogate.ispider.web.w1.W1StoragePipeline"
     ],
-    "pageProcessor": "vn.infogate.ispider.web.cenhome.CenHomePageProcessor",
+    "pageProcessor": "vn.infogate.ispider.web.w1.W1PageProcessor",
     "fields": [
       {
         "name": "title",
@@ -71,6 +71,10 @@
         "name": "images",
         "expr": "//*[@class='itemthumb']/img/@data-src",
         "multi": true
+      },
+      {
+        "name": "publish_type",
+        "expr": "//*[@class='breadcrumb']/li[2]/a/text()"
       }
     ]
   }

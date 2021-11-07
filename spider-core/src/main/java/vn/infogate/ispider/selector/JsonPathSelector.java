@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import org.apache.commons.collections4.CollectionUtils;
 import vn.infogate.ispider.utils.JsonUtils;
-import vn.infogate.ispider.utils.ObjectMapperFactory;
+import vn.infogate.ispider.common.objectmapper.ObjectMapperFactory;
 
 import java.util.ArrayList;
 import java.util.Collections;

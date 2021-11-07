@@ -18,12 +18,12 @@ public enum AreaUnit {
         this.name = name;
     }
 
-    public static int getCode(String text) {
+    public static Integer getCode(String text) {
         for (var type : values()) {
             if (type.getName().equalsIgnoreCase(text)) {
                 return type.getCode();
             }
         }
-        return 1;
+        return AreaUnit.M2.code;
     }
 }

@@ -1,4 +1,4 @@
-package vn.infogate.ispider.web.utils;
+package vn.infogate.ispider.common.utils;
 
 /**
  * @author anct.

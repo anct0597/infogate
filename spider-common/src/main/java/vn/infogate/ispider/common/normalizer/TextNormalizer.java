@@ -1,4 +1,4 @@
-package vn.infogate.ispider.web.normalizer;
+package vn.infogate.ispider.common.normalizer;
 
 import java.text.Normalizer;
 

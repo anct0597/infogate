@@ -25,12 +25,12 @@ public enum PropertyDirection {
         this.viName = viName;
     }
 
-    public static int getCode(String viName) {
+    public static Integer getCode(String viName) {
         for (var direction : values()) {
             if (direction.viName.equalsIgnoreCase(viName)) {
                 return direction.getCode();
             }
         }
-        return 0;
+        return null;
     }
 }

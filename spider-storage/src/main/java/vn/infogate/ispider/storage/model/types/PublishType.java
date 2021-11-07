@@ -8,14 +8,25 @@ import lombok.Getter;
  */
 @Getter
 public enum PublishType {
-    OWNER(1, "Chính chủ"),
-    BROKER(2, "Môi giới");
+    SELL(1, "Cần bán", "Mua nhà"),
+    RENT(2, "Cho thuê", "Thuê nhà");
 
     private final int code;
-    private final String viName;
+    private final String[] viNames;
 
-    PublishType(int code, String viName) {
+    PublishType(int code, String... viNames) {
         this.code = code;
-        this.viName = viName;
+        this.viNames = viNames;
+    }
+
+    public static Integer getCodeFromName(String text) {
+        for (var type : values()) {
+            for (var name : type.viNames) {
+                if (name.equalsIgnoreCase(text)) {
+                    return type.code;
+                }
+            }
+        }
+        return null;
     }
 }

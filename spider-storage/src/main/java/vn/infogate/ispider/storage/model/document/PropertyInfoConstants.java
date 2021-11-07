@@ -6,6 +6,11 @@ public class PropertyInfoConstants {
     public static final String SHORT_SUMMARY = "short_summary";
     public static final String TITLE = "title";
     public static final String AREA = "area";
+    public static final String WIDTH = "width";
+    public static final String LENGTH = "length";
+    public static final String KITCHEN = "kitchen";
+    public static final String LIVING_ROOMS = "living_rooms";
+    public static final String FLOORS = "floors";
     public static final String RANGE_AREA = "range_area";
     public static final String AREA_UNIT = "area_unit";
     public static final String TOTAL_PRICE = "total_price";
@@ -29,6 +34,7 @@ public class PropertyInfoConstants {
     public static final String INVESTOR_PROJECT = "investor_project";
     public static final String SOURCE_INFO = "source";
     public static final String PUBLISH_TYPE = "publish_type";
+    public static final String PUBLISHER_TYPE = "publisher_type";
     public static final String PUBLISHER = "publisher";
     public static final String PUBLISH_DATE = "publish_date";
     public static final String PUBLISH_END_DATE = "publish_end_date";
