@@ -1,6 +1,6 @@
 {
   "thread": 1,
-  "status": 1,
+  "status": 0,
   "pageModel": {
     "targetUrls": [
       "https://cenhomes.vn/mua-nha/[a-zA-Z-0-9]+",

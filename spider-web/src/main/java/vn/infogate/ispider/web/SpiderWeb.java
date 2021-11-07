@@ -2,11 +2,14 @@ package vn.infogate.ispider.web;
 
 import lombok.extern.slf4j.Slf4j;
 import vn.infogate.ispider.Spider;
+import vn.infogate.ispider.common.objectmapper.ObjectMapperFactory;
+import vn.infogate.ispider.downloader.Downloader;
+import vn.infogate.ispider.downloader.HttpClientDownloader;
+import vn.infogate.ispider.downloader.PhantomJSDownloader;
 import vn.infogate.ispider.json.JsonDefinedPageProcessor;
 import vn.infogate.ispider.json.JsonPageModel;
 import vn.infogate.ispider.json.JsonSpiderConfig;
 import vn.infogate.ispider.pipeline.Pipeline;
-import vn.infogate.ispider.common.objectmapper.ObjectMapperFactory;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -40,6 +43,17 @@ public class SpiderWeb {
         return pipelines;
     }
 
+    private static Downloader createDownloader(JsonSpiderConfig config) {
+        switch (config.getDownloader()) {
+            case SELENIUM:
+                return null;
+            case PHANTOMJS:
+                return new PhantomJSDownloader(config.getPhantomJs());
+            default:
+                return new HttpClientDownloader();
+        }
+    }
+
     public static void main(String[] args) throws Exception {
         var mapper = ObjectMapperFactory.getInstance();
 
@@ -53,7 +67,7 @@ public class SpiderWeb {
                     var pageProcessor = newPageProcessorInstance(pageModel);
                     var pipelines = createPipelines(pageModel);
                     Spider.create(pageProcessor)
-//                            .setDownloader(new PhantomJSDownloader())
+                            .setDownloader(createDownloader(spiderConfig))
                             .setPipelines(pipelines)
                             .addUrl(pageModel.getStartUrls())
                             .thread(spiderConfig.getThread())

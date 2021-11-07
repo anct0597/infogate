@@ -2,9 +2,10 @@ package vn.infogate.ispider.selector;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
+import net.minidev.json.JSONArray;
 import org.apache.commons.collections4.CollectionUtils;
-import vn.infogate.ispider.utils.JsonUtils;
 import vn.infogate.ispider.common.objectmapper.ObjectMapperFactory;
+import vn.infogate.ispider.utils.JsonUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,17 +49,22 @@ public class JsonPathSelector implements Selector {
 
     @Override
     public List<String> selectList(String text) {
-        Object object = jsonPath.read(text);
-        if (object == null) return Collections.emptyList();
+        var obj = jsonPath.read(text);
+        if (obj == null) return Collections.emptyList();
 
-        List<String> list = new ArrayList<>();
-        if (object instanceof List) {
-            List<Object> items = (List<Object>) object;
-            for (Object item : items) {
-                list.add(toString(item));
+        var list = new ArrayList<String>(5);
+        if (obj instanceof JSONArray) {
+            for (Object item : (JSONArray) obj) {
+                if (item instanceof List) {
+                    for (var el : (List<Object>) item) {
+                        list.add(toString(el));
+                    }
+                } else {
+                    list.add(toString(item));
+                }
             }
         } else {
-            list.add(toString(object));
+            list.add(toString(obj));
         }
         return list;
     }

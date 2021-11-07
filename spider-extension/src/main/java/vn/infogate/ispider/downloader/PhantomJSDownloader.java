@@ -72,12 +72,12 @@ public class PhantomJSDownloader extends AbstractDownloader {
             Process process = runtime.exec(phantomJsCommand + " " + crawlJsPath + " " + url);
             InputStream is = process.getInputStream();
             var br = new BufferedReader(new InputStreamReader(is));
-            var stringBuffer = new StringBuilder();
+            var strBuilder = new StringBuilder();
             String line;
             while ((line = br.readLine()) != null) {
-                stringBuffer.append(line).append("\n");
+                strBuilder.append(line).append("\n");
             }
-            return stringBuffer.toString();
+            return strBuilder.toString();
         } catch (IOException e) {
             e.printStackTrace();
         }

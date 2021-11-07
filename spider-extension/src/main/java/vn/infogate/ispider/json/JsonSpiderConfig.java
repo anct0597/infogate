@@ -17,5 +17,13 @@ public class JsonSpiderConfig {
     // 0: inactive, 1: active
     private int status;
 
+    private DownloaderType downloader = DownloaderType.DEFAULT;
+
     private JsonPageModel pageModel;
+
+    private String phantomJs;
+
+    public enum DownloaderType {
+        DEFAULT, PHANTOMJS, SELENIUM
+    }
 }

@@ -79,6 +79,9 @@ public class PropertyInfoDoc {
     @Field(PropertyInfoConstants.BATH_ROOMS)
     private Integer bathRooms;
 
+    @Field(PropertyInfoConstants.TOILET)
+    private Integer toilets;
+
     @Field(PropertyInfoConstants.KITCHEN)
     private Integer kitchen;
 

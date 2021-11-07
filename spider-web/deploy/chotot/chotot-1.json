@@ -1,0 +1,90 @@
+{
+  "thread": 1,
+  "status": 1,
+  "pageModel": {
+    "targetUrls": [
+      "https://nha.chotot.com/[\\w\\-/]+.htm",
+      "https://nha.chotot.com/[\\w\\-/]+.html"
+    ],
+    "ignoreUrls": [],
+    "startUrls": [
+      "https://nha.chotot.com/ha-noi/quan-ha-dong/mua-ban-nha-dat/76338079.htm"
+    ],
+    "pipelines": [
+      "vn.infogate.ispider.web.w4.W4ModelGatherPipeline",
+      "vn.infogate.ispider.web.w4.W4StoragePipeline"
+    ],
+    "pageProcessor": "vn.infogate.ispider.web.w4.W4PageProcessor",
+    "fields": [
+      {
+        "name": "title",
+        "expr": "//*[@itemprop='name']/text()",
+        "required": true
+      },
+      {
+        "name": "phones",
+        "expr": "//*[@class='LeadButton_showPhoneButton__1KVb-']/span[1]/text()"
+      },
+      {
+        "name": "area",
+        "expr": "//*[@itemprop='size']/text()"
+      },
+      {
+        "name": "width",
+        "expr": "//*[@itemprop='width']/text()"
+      },
+      {
+        "name": "length",
+        "expr": "//*[@itemprop='length']/text()"
+      },
+      {
+        "name": "floors",
+        "expr": "//*[@itemprop='floors']/text()"
+      },
+      {
+        "name": "bed_rooms",
+        "expr": "//*[@itemprop='rooms']/text()"
+      },
+      {
+        "name": "toilets",
+        "expr": "//*[@itemprop='toilets']/text()"
+      },
+      {
+        "name": "living_area",
+        "expr": "//*[@itemprop='living_size']/text()"
+      },
+      {
+        "name": "direction",
+        "expr": "//*[@class='infor']/table/tbody/tr[1]/td[4]/text()"
+      },
+      {
+        "name": "location",
+        "expr": "//*[@class='address']/span[2]/text()"
+      },
+      {
+        "name": "total_price",
+        "expr": "//*[@class='price']/span[2]/text()"
+      },
+      {
+        "name": "property_type",
+        "expr": "//*[@itemprop='house_type']/text()"
+      },
+      {
+        "name": "publisher_type",
+        "expr": "//*[@class='infor']/table/tbody/tr[5]/td[6]/text()"
+      },
+      {
+        "name": "publish_type",
+        "expr": "//*[@class='infor']/table/tbody/tr[2]/td[2]/text()"
+      },
+      {
+        "name": "legal_status",
+        "expr": "//*[@itemprop='property_legal_document']/text()"
+      },
+      {
+        "name": "images",
+        "expr": "//*[@id='__NEXT_DATA__']"
+      }
+    ]
+  }
+}

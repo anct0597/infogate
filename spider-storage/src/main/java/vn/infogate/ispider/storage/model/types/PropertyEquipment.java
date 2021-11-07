@@ -8,7 +8,8 @@ import lombok.Getter;
 @Getter
 public enum PropertyEquipment {
     BASIC(1, "Nội thất cơ bản"),
-    FULL(2, "Nội thất đầy đủ");
+    FULL(2, "Nội thất đầy đủ"),
+    LUXURY(3, "Nội thất cao cấp");
 
     private final int code;
     private final String viName;

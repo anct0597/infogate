@@ -27,6 +27,7 @@ public class PropertyInfoConstants {
     public static final String URL = "url";
     public static final String BED_ROOMS = "bed_rooms";
     public static final String BATH_ROOMS = "bath_rooms";
+    public static final String TOILET = "toilets";
     public static final String DIRECTION = "direction";
     public static final String IMAGES = "images";
     public static final String PHONES = "phones";
@@ -42,4 +43,5 @@ public class PropertyInfoConstants {
     public static final String REPORT_REASONS = "report_reasons";
     public static final String UNIT_PRICE_CAL_UNIT = "unit_price_cal_unit";
     public static final String TOTAL_PRICE_CAL_UNIT = "total_price_cal_unit";
+    public static final String LIVING_AREA = "living_area";
 }
