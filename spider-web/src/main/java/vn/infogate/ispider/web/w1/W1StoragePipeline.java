@@ -24,7 +24,7 @@ public class W1StoragePipeline implements Pipeline {
         var propertyInfoDoc = PropertyInfoTransformer.toPropertyInfoDoc(
                 resultItems.getRequest().getUrl(),
                 resultItems.getFields());
-        log.info("[Cen-home] {}", propertyInfoDoc);
+        log.debug("[cenhome.vn] {}", propertyInfoDoc);
         propertyInfoRepo.save(propertyInfoDoc);
     }
 }

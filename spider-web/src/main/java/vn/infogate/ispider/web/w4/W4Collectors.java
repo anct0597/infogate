@@ -216,5 +216,16 @@ public enum W4Collectors implements JsonFieldCollector {
         public String extractFrom() {
             return PropertyInfoConstants.PUBLISH_TYPE;
         }
+    },
+    PUBLISH_DATE {
+        @Override
+        public Long collect(Object raw) {
+            return CommonCollectors.extractDate(raw);
+        }
+
+        @Override
+        public String extractFrom() {
+            return PropertyInfoConstants.PUBLISH_DATE;
+        }
     }
 }

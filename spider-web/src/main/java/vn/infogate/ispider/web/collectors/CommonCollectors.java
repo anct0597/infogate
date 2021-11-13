@@ -3,6 +3,7 @@ package vn.infogate.ispider.web.collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import vn.infogate.ispider.common.normalizer.TextNormalizer;
+import vn.infogate.ispider.common.utils.DatetimeUtils;
 import vn.infogate.ispider.common.utils.VNCharacterUtils;
 import vn.infogate.ispider.storage.model.entity.LocationModel;
 import vn.infogate.ispider.storage.model.entity.PriceModel;
@@ -19,6 +20,34 @@ import java.util.function.Predicate;
  * @author anct.
  */
 public class CommonCollectors {
+
+    public static long extractDate(Object raw) {
+        var text = String.valueOf(raw);
+        var normalizeText = TextNormalizer.normalize(text).toLowerCase();
+        var matcher = Regex.DATE_DD_MM_YYY.matcher(normalizeText);
+        if (matcher.find()) {
+            return DatetimeUtils.getTimeAsMs(matcher.group(1));
+        }
+
+        matcher = Regex.DATE_STR_VI.matcher(normalizeText);
+        if (matcher.find()) {
+            var date = matcher.group(1);
+            if (DatetimeUtils.YESTERDAY.equals(date)) {
+                return DatetimeUtils.getTimeBeforeDate(-1);
+            } else {
+                return DatetimeUtils.getCurTimeAsMs();
+            }
+        }
+
+        matcher = Regex.DATETIME_STR_BEFORE.matcher(normalizeText);
+        if (matcher.find()) {
+            var before = matcher.group(1);
+            var unit = matcher.group(3);
+            return DatetimeUtils.getTimeBefore(Integer.parseInt(before) * -1, unit);
+        }
+
+        return DatetimeUtils.getCurTimeAsMs();
+    }
 
     public static Integer extractAsInt(Object raw) {
         return extractAsInt(raw, null);

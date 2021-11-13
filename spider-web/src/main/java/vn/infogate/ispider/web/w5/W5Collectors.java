@@ -1,6 +1,8 @@
-package vn.infogate.ispider.web.w3;
+package vn.infogate.ispider.web.w5;
 
+import org.jsoup.Jsoup;
 import vn.infogate.ispider.json.JsonFieldCollector;
+import vn.infogate.ispider.selector.JsonPathSelector;
 import vn.infogate.ispider.storage.model.document.PropertyInfoConstants;
 import vn.infogate.ispider.storage.model.entity.LocationModel;
 import vn.infogate.ispider.storage.model.entity.PriceModel;
@@ -8,12 +10,11 @@ import vn.infogate.ispider.storage.model.types.*;
 import vn.infogate.ispider.web.collectors.CommonCollectors;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author anct.
  */
-public enum W3Collectors implements JsonFieldCollector {
+public enum W5Collectors implements JsonFieldCollector {
 
     AREA {
         @Override
@@ -25,6 +26,17 @@ public enum W3Collectors implements JsonFieldCollector {
         public Double collect(Object raw) {
             var matcher = Regex.AREA.matcher(String.valueOf(raw));
             return matcher.find() ? Double.parseDouble(matcher.group(1)) : 0.0;
+        }
+    },
+    LIVING_AREA {
+        @Override
+        public String extractFrom() {
+            return PropertyInfoConstants.LIVING_AREA;
+        }
+
+        @Override
+        public Double collect(Object raw) {
+            return CommonCollectors.extractAsDouble(raw);
         }
     },
     WIDTH {
@@ -100,18 +112,7 @@ public enum W3Collectors implements JsonFieldCollector {
             return PropertyInfoConstants.FLOORS;
         }
     },
-    KITCHEN {
-        @Override
-        public Integer collect(Object raw) {
-            return CommonCollectors.check(raw, Objects::nonNull);
-        }
-
-        @Override
-        public String extractFrom() {
-            return PropertyInfoConstants.KITCHEN;
-        }
-    },
-    BATH_ROOM {
+    TOILETS {
         @Override
         public Integer collect(Object raw) {
             return CommonCollectors.extractAsInt(raw);
@@ -119,7 +120,7 @@ public enum W3Collectors implements JsonFieldCollector {
 
         @Override
         public String extractFrom() {
-            return PropertyInfoConstants.BATH_ROOMS;
+            return PropertyInfoConstants.TOILET;
         }
     },
     DIRECTION {
@@ -142,6 +143,18 @@ public enum W3Collectors implements JsonFieldCollector {
         @Override
         public String extractFrom() {
             return PropertyInfoConstants.TOTAL_PRICE;
+        }
+    },
+    IMAGES {
+        @Override
+        public List<String> collect(Object raw) {
+            var replacedText =  Jsoup.parse(String.valueOf(raw)).data();
+            return new JsonPathSelector("$..ad.images").selectList(replacedText);
+        }
+
+        @Override
+        public String extractFrom() {
+            return PropertyInfoConstants.IMAGES;
         }
     },
     PROPERTY_TYPE {

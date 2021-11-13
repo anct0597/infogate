@@ -40,8 +40,8 @@ public class PropertyInfoTransformer {
         chInfo.setSource(Utils.getAsStr(fieldValues, PropertyInfoConstants.SOURCE_INFO));
         chInfo.setPublishType(Utils.getAsInt(fieldValues, PropertyInfoConstants.PUBLISH_TYPE));
         chInfo.setPublisher(Utils.getAsStr(fieldValues, PropertyInfoConstants.PUBLISHER));
-        chInfo.setPublishDate(Utils.getAsStr(fieldValues, PropertyInfoConstants.PUBLISH_DATE));
-        chInfo.setPublishEndDate(Utils.getAsStr(fieldValues, PropertyInfoConstants.PUBLISH_END_DATE));
+        chInfo.setPublishDate(Utils.getAsLong(fieldValues, PropertyInfoConstants.PUBLISH_DATE));
+        chInfo.setCrawledTime(Utils.getAsLong(fieldValues, PropertyInfoConstants.CRAWLED_TIME));
         chInfo.setReporters(Utils.getAsList(fieldValues, PropertyInfoConstants.REPORTERS));
         chInfo.setReportReasons(Utils.getAsList(fieldValues, PropertyInfoConstants.REPORT_REASONS));
 

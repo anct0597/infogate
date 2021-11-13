@@ -38,7 +38,7 @@ public class PropertyInfoConstants {
     public static final String PUBLISHER_TYPE = "publisher_type";
     public static final String PUBLISHER = "publisher";
     public static final String PUBLISH_DATE = "publish_date";
-    public static final String PUBLISH_END_DATE = "publish_end_date";
+    public static final String CRAWLED_TIME = "crawled_time";
     public static final String REPORTERS = "reporters";
     public static final String REPORT_REASONS = "report_reasons";
     public static final String UNIT_PRICE_CAL_UNIT = "unit_price_cal_unit";

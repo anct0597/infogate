@@ -1,24 +1,23 @@
 {
   "thread": 1,
-  "status": 0,
+  "status": 1,
   "pageModel": {
     "targetUrls": [
-      "https://nha.chotot.com/[\\w\\-/]+.htm",
-      "https://nha.chotot.com/[\\w\\-/]+.html"
+      "https://dhomes.com.vn/tin-dang/[\\w\\-/]+"
     ],
     "ignoreUrls": [],
     "startUrls": [
-      "https://nha.chotot.com/ha-noi/quan-ha-dong/mua-ban-nha-dat/76338079.htm"
+      "https://dhomes.com.vn/tin-dang/DH202111-080028/ban-nha-rieng-thai-ha-dong-da-ha-noi"
     ],
     "pipelines": [
-      "vn.infogate.ispider.web.w4.W4ModelGatherPipeline",
-      "vn.infogate.ispider.web.w4.W4StoragePipeline"
+      "vn.infogate.ispider.web.w5.W5ModelGatherPipeline",
+      "vn.infogate.ispider.web.w5.W5StoragePipeline"
     ],
-    "pageProcessor": "vn.infogate.ispider.web.w4.W4PageProcessor",
+    "pageProcessor": "vn.infogate.ispider.web.w5.W5PageProcessor",
     "fields": [
       {
         "name": "title",
-        "expr": "//*[@itemprop='name']/text()",
+        "expr": "//*[@id='__next']/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/text()",
         "required": true
       },
       {
@@ -27,7 +26,7 @@
       },
       {
         "name": "area",
-        "expr": "//*[@itemprop='size']/text()"
+        "expr": "//*[@id='__next']/div[1]/div[3]/div[1]/div[2]/div[2]/div[1]/div[3]/div[2]/text()"
       },
       {
         "name": "width",
@@ -39,11 +38,11 @@
       },
       {
         "name": "floors",
-        "expr": "//*[@itemprop='floors']/text()"
+        "expr": "//*[@id='__next']/div[1]/div[3]/div[1]/div[2]/div[2]/div[1]/div[6]/div[2]/text()"
       },
       {
         "name": "bed_rooms",
-        "expr": "//*[@itemprop='rooms']/text()"
+        "expr": "//*[@id='__next']/div[1]/div[3]/div[1]/div[2]/div[2]/div[1]/div[7]/div[2]/text()"
       },
       {
         "name": "toilets",
@@ -63,7 +62,7 @@
       },
       {
         "name": "total_price",
-        "expr": "//*[@class='price']/span[2]/text()"
+        "expr": "//*[@class='styled__PriceAsText-sc-1lz7af6-4']/text()"
       },
       {
         "name": "property_type",
@@ -79,7 +78,7 @@
       },
       {
         "name": "legal_status",
-        "expr": "//*[@itemprop='property_legal_document']/text()"
+        "expr": "//*[@id='__next']/div[1]/div[3]/div[1]/div[2]/div[2]/div[1]/div[1]/div[2]/text()"
       },
       {
         "name": "images",

@@ -1,4 +1,4 @@
-package vn.infogate.ispider.web.w3;
+package vn.infogate.ispider.web.w5;
 
 import lombok.extern.slf4j.Slf4j;
 import vn.infogate.ispider.ResultItems;
@@ -11,11 +11,11 @@ import vn.infogate.ispider.storage.transfomer.PropertyInfoTransformer;
  * @author anct.
  */
 @Slf4j
-public class W3StoragePipeline implements Pipeline {
+public class W5StoragePipeline implements Pipeline {
 
     private final PropertyInfoRepo propertyInfoRepo;
 
-    public W3StoragePipeline() {
+    public W5StoragePipeline() {
         this.propertyInfoRepo = PropertyInfoRepo.getInstance();
     }
 
@@ -24,7 +24,7 @@ public class W3StoragePipeline implements Pipeline {
         var propertyInfoDoc = PropertyInfoTransformer.toPropertyInfoDoc(
                 resultItems.getRequest().getUrl(),
                 resultItems.getFields());
-        log.debug("alonhadat.com {}", propertyInfoDoc);
+        log.debug("[dhomes.com.vn] {}", propertyInfoDoc);
         propertyInfoRepo.save(propertyInfoDoc);
     }
 }

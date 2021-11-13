@@ -24,6 +24,7 @@ public class W4StoragePipeline implements Pipeline {
         var propertyInfoDoc = PropertyInfoTransformer.toPropertyInfoDoc(
                 resultItems.getRequest().getUrl(),
                 resultItems.getFields());
+        log.debug("[nha.chotot.com] {}", propertyInfoDoc);
         propertyInfoRepo.save(propertyInfoDoc);
     }
 }

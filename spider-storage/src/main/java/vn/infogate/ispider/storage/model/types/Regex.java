@@ -13,4 +13,7 @@ public class Regex {
     public static final Pattern NUMBER = Pattern.compile("(\\d+)");
     public static final Pattern PRICE = Pattern.compile("([\\d,.]+)(k|tr|trieu|ty|triệu|tỷ)?");
     public static final Pattern RANGE_PRICE = Pattern.compile("([\\d,.]+)([-])?([\\d,.]+)(k|tr|trieu|ty|triệu|tỷ)?");
+    public static final Pattern DATE_DD_MM_YYY = Pattern.compile("(\\d){2}([\\/-])(\\d){2}([\\/-])(\\d){4}");
+    public static final Pattern DATE_STR_VI = Pattern.compile("(hôm nay)|(hôm qua)");
+    public static final Pattern DATETIME_STR_BEFORE = Pattern.compile("(\\d+)(\\s)*(ngày|giờ|phút)");
 }

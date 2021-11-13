@@ -73,6 +73,10 @@
         "expr": "//*[@class='infor']/table/tbody/tr[2]/td[2]/text()"
       },
       {
+        "name": "publish_date",
+        "expr": "//*[@class='date']/text()"
+      },
+      {
         "name": "legal_status",
         "expr": "//*[@class='infor']/table/tbody/tr[3]/td[4]/text()"
       },

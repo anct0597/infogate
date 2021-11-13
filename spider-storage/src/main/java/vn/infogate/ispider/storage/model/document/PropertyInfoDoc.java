@@ -121,10 +121,10 @@ public class PropertyInfoDoc {
     private String publisher;
 
     @Field(PropertyInfoConstants.PUBLISH_DATE)
-    private String publishDate;
+    private Long publishDate;
 
-    @Field(PropertyInfoConstants.PUBLISH_END_DATE)
-    private String publishEndDate;
+    @Field(PropertyInfoConstants.CRAWLED_TIME)
+    private Long crawledTime;
 
     @Field(PropertyInfoConstants.REPORTERS)
     private List<String> reporters;
