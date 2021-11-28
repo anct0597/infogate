@@ -1,0 +1,52 @@
+{
+  "thread": 1,
+  "status": 1,
+  "downloader": "PHANTOMJS",
+  "phantomJs": "spider-web/deploy/muabannet/crawl.js",
+  "pageModel": {
+    "targetUrls": [
+      "https://muaban.net/ban-can-ho[\\w\\-/]+",
+      "https://muaban.net/nha-mat-tien[\\w\\-/]+",
+      "https://muaban.net/dat-tho-cu[\\w\\-/]+",
+      "https://muaban.net/nha-hem-ngo[\\w\\-/]+",
+      "https://muaban.net/biet-thu-villa[\\w\\-/]+",
+      "https://muaban.net/dat-du-an-khu-dan-cu[\\w\\-/]+",
+      "https://muaban.net/dat-nong-nghiep[\\w\\-/]+",
+      "https://muaban.net/ban-can-ho[\\w\\-/]+"
+    ],
+    "ignoreUrls": [],
+    "startUrls": [
+      "https://muaban.net/ban-can-ho-chung-cu-tap-the-quan-long-bien-l2412-c38/sieu-pham-can-ho-long-bien-3pn-82m2-id63558252",
+      "https://muaban.net/dat-du-an-khu-dan-cu-quan-long-bien-l2412-c3101/ban-dat-dau-gia-102-5m2-lo-goc-duong-to-17m-huong-dong-nam-dong-bac-id62967199"
+    ],
+    "pipelines": [
+      "vn.infogate.ispider.web.w5.W5ModelGatherPipeline",
+      "vn.infogate.ispider.web.w5.W5StoragePipeline"
+    ],
+    "pageProcessor": "vn.infogate.ispider.web.w5.W5PageProcessor",
+    "fields": [
+      {
+        "name": "title",
+        "expr": "//*[@class='title']/text()",
+        "required": true
+      },
+      {
+        "name": "phones",
+        "expr": "//*[@class='mobile-container__value']/span/@mobile"
+      },
+      {
+        "name": "short_summary",
+        "expr": "//*[@class='body-container']/text()"
+      },
+      {
+        "name": "images",
+        "expr": "//*[@class='image-container']/img/@src",
+        "multi": true
+      },
+      {
+        "name": "publish_date",
+        "expr": "//*[@class='location-clock__clock']/text()"
+      }
+    ]
+  }
+}

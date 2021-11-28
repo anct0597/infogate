@@ -1,6 +1,6 @@
 package vn.infogate.ispider.web.w3;
 
-import vn.infogate.ispider.json.JsonFieldCollector;
+import vn.infogate.ispider.extension.json.JsonFieldCollector;
 import vn.infogate.ispider.storage.model.document.PropertyInfoConstants;
 import vn.infogate.ispider.storage.model.entity.LocationModel;
 import vn.infogate.ispider.storage.model.entity.PriceModel;

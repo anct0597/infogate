@@ -1,9 +1,9 @@
 package vn.infogate.ispider.web.w5;
 
 import lombok.extern.slf4j.Slf4j;
-import vn.infogate.ispider.ResultItems;
-import vn.infogate.ispider.Task;
-import vn.infogate.ispider.pipeline.Pipeline;
+import vn.infogate.ispider.core.ResultItems;
+import vn.infogate.ispider.core.Task;
+import vn.infogate.ispider.core.pipeline.Pipeline;
 import vn.infogate.ispider.storage.repo.PropertyInfoRepo;
 import vn.infogate.ispider.storage.transfomer.PropertyInfoTransformer;
 
@@ -24,7 +24,7 @@ public class W5StoragePipeline implements Pipeline {
         var propertyInfoDoc = PropertyInfoTransformer.toPropertyInfoDoc(
                 resultItems.getRequest().getUrl(),
                 resultItems.getFields());
-        log.debug("[dhomes.com.vn] {}", propertyInfoDoc);
+        log.debug("[muaban.net] {}", propertyInfoDoc);
         propertyInfoRepo.save(propertyInfoDoc);
     }
 }

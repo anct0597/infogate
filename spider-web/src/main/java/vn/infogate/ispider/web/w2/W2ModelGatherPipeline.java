@@ -1,6 +1,6 @@
 package vn.infogate.ispider.web.w2;
 
-import vn.infogate.ispider.json.JsonModelGatherPipeline;
+import vn.infogate.ispider.extension.json.JsonModelGatherPipeline;
 
 /**
  * @author anct.

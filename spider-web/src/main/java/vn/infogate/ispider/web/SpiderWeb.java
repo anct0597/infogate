@@ -1,15 +1,15 @@
 package vn.infogate.ispider.web;
 
 import lombok.extern.slf4j.Slf4j;
-import vn.infogate.ispider.Spider;
 import vn.infogate.ispider.common.objectmapper.ObjectMapperFactory;
-import vn.infogate.ispider.downloader.Downloader;
-import vn.infogate.ispider.downloader.HttpClientDownloader;
-import vn.infogate.ispider.downloader.PhantomJSDownloader;
-import vn.infogate.ispider.json.JsonDefinedPageProcessor;
-import vn.infogate.ispider.json.JsonPageModel;
-import vn.infogate.ispider.json.JsonSpiderConfig;
-import vn.infogate.ispider.pipeline.Pipeline;
+import vn.infogate.ispider.core.Spider;
+import vn.infogate.ispider.core.downloader.Downloader;
+import vn.infogate.ispider.core.downloader.HttpClientDownloader;
+import vn.infogate.ispider.core.downloader.PhantomJSDownloader;
+import vn.infogate.ispider.core.pipeline.Pipeline;
+import vn.infogate.ispider.extension.json.JsonDefinedPageProcessor;
+import vn.infogate.ispider.extension.json.JsonPageModel;
+import vn.infogate.ispider.extension.json.JsonSpiderConfig;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -57,7 +57,7 @@ public class SpiderWeb {
     public static void main(String[] args) throws Exception {
         var mapper = ObjectMapperFactory.getInstance();
 
-        Files.walk(Path.of(DEFAULT_DEPLOY_FOLDER)).filter(path -> path.toFile().isFile()).forEach(file -> {
+        Files.walk(Path.of(DEFAULT_DEPLOY_FOLDER)).filter(path -> path.toFile().isFile() && path.toString().endsWith(".json")).forEach(file -> {
             try {
                 var value = Files.readString(file.toAbsolutePath());
                 var spiderConfig = mapper.readValue(value, JsonSpiderConfig.class);

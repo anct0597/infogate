@@ -1,8 +1,8 @@
 package vn.infogate.ispider.web.w5;
 
 import org.jsoup.Jsoup;
-import vn.infogate.ispider.json.JsonFieldCollector;
-import vn.infogate.ispider.selector.JsonPathSelector;
+import vn.infogate.ispider.core.selector.JsonPathSelector;
+import vn.infogate.ispider.extension.json.JsonFieldCollector;
 import vn.infogate.ispider.storage.model.document.PropertyInfoConstants;
 import vn.infogate.ispider.storage.model.entity.LocationModel;
 import vn.infogate.ispider.storage.model.entity.PriceModel;

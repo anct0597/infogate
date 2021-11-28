@@ -1,10 +1,10 @@
 package vn.infogate.ispider.web.w1;
 
 import lombok.extern.slf4j.Slf4j;
-import vn.infogate.ispider.Page;
-import vn.infogate.ispider.Site;
-import vn.infogate.ispider.json.JsonDefinedPageProcessor;
-import vn.infogate.ispider.json.JsonPageProcessor;
+import vn.infogate.ispider.core.Page;
+import vn.infogate.ispider.core.Site;
+import vn.infogate.ispider.extension.json.JsonDefinedPageProcessor;
+import vn.infogate.ispider.extension.json.JsonPageProcessor;
 
 @Slf4j
 @JsonPageProcessor
