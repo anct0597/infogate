@@ -45,13 +45,13 @@ page.open(url, function (status) {
     } else {
         page.includeJs(
             // Include the https version, you can change this to http if you like.
-            'https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js',
+            'https://muaban.net/ScriptsApp/Views/Detail.js',
             function () {
                 // Wait for image loaded
                 waitFor(function () {
                     // Check in the page if a specific element is now visible
                     return page.evaluate(function () {
-                        return $('.image__slides div').children.length !== 0;
+                        return document.querySelector('.image__slides div').length > 0;
                     });
                 }, function () {
                     console.log(page.content);

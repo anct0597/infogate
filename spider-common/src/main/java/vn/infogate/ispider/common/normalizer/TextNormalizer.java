@@ -31,4 +31,12 @@ public class TextNormalizer {
     public static String removeWhitespace(String content) {
         return content.replaceAll("\\s+", "");
     }
+
+    public static String removeQuote(String content) {
+        return content.replaceAll("\"", "");
+    }
+
+    public static String removeBracket(String content) {
+        return content.replaceAll("\\[", "");
+    }
 }

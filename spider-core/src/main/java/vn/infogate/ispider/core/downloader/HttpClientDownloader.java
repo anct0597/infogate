@@ -99,7 +99,8 @@ public class HttpClientDownloader extends AbstractDownloader {
                                   HttpResponse httpResponse,
                                   Task task) throws IOException {
         byte[] bytes = IOUtils.toByteArray(httpResponse.getEntity().getContent());
-        String contentType = httpResponse.getEntity().getContentType() == null ? "" : httpResponse.getEntity().getContentType().getValue();
+        String contentType = httpResponse.getEntity().getContentType() == null
+                ? "" : httpResponse.getEntity().getContentType().getValue();
         Page page = new Page();
         page.setBytes(bytes);
         if (!request.isBinaryContent()) {
@@ -119,7 +120,7 @@ public class HttpClientDownloader extends AbstractDownloader {
         return page;
     }
 
-    private String getHtmlCharset(String contentType, byte[] contentBytes) throws IOException {
+    private String getHtmlCharset(String contentType, byte[] contentBytes) {
         String charset = CharsetUtils.detectCharset(contentType, contentBytes);
         if (charset == null) {
             charset = Charset.defaultCharset().name();

@@ -20,7 +20,9 @@ import java.net.URI;
 public class CustomRedirectStrategy extends LaxRedirectStrategy {
 
     @Override
-    public HttpUriRequest getRedirect(HttpRequest request, HttpResponse response, HttpContext context) throws ProtocolException {
+    public HttpUriRequest getRedirect(HttpRequest request,
+                                      HttpResponse response,
+                                      HttpContext context) throws ProtocolException {
         URI uri = getLocationURI(request, response, context);
         String method = request.getRequestLine().getMethod();
         if ("post".equalsIgnoreCase(method)) {

@@ -1,8 +1,6 @@
 {
   "thread": 1,
   "status": 1,
-  "downloader": "PHANTOMJS",
-  "phantomJs": "spider-web/deploy/muabannet/crawl.js",
   "pageModel": {
     "targetUrls": [
       "https://muaban.net/ban-can-ho[\\w\\-/]+",
@@ -40,7 +38,7 @@
       },
       {
         "name": "images",
-        "expr": "//*[@class='image-container']/img/@src",
+        "expr": "/html/body/script[1]",
         "multi": true
       },
       {

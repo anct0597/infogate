@@ -42,7 +42,8 @@ public class HttpUriRequestConverter {
         HttpClientContext httpContext = new HttpClientContext();
         if (proxy != null && proxy.getUsername() != null) {
             AuthState authState = new AuthState();
-            authState.update(new BasicScheme(ChallengeState.PROXY), new UsernamePasswordCredentials(proxy.getUsername(), proxy.getPassword()));
+            authState.update(new BasicScheme(ChallengeState.PROXY),
+                    new UsernamePasswordCredentials(proxy.getUsername(), proxy.getPassword()));
             httpContext.setAttribute(HttpClientContext.PROXY_AUTH_STATE, authState);
         }
         if (request.getCookies() != null && !request.getCookies().isEmpty()) {
@@ -58,7 +59,8 @@ public class HttpUriRequestConverter {
     }
 
     private HttpUriRequest convertHttpUriRequest(Request request, Site site, Proxy proxy) {
-        var requestBuilder = selectRequestMethod(request).setUri(UrlUtils.fixIllegalCharacterInUrl(request.getUrl()));
+        var requestBuilder = selectRequestMethod(request)
+                .setUri(UrlUtils.fixIllegalCharacterInUrl(request.getUrl()));
         if (site.getHeaders() != null) {
             for (Map.Entry<String, String> headerEntry : site.getHeaders().entrySet()) {
                 requestBuilder.addHeader(headerEntry.getKey(), headerEntry.getValue());

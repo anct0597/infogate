@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import vn.infogate.ispider.common.objectmapper.ObjectMapperFactory;
 import vn.infogate.ispider.core.Spider;
 import vn.infogate.ispider.core.downloader.Downloader;
+import vn.infogate.ispider.core.downloader.HtmlUnitSeleniumDownloader;
 import vn.infogate.ispider.core.downloader.HttpClientDownloader;
 import vn.infogate.ispider.core.downloader.PhantomJSDownloader;
 import vn.infogate.ispider.core.pipeline.Pipeline;
@@ -46,7 +47,7 @@ public class SpiderWeb {
     private static Downloader createDownloader(JsonSpiderConfig config) {
         switch (config.getDownloader()) {
             case SELENIUM:
-                return null;
+                return new HtmlUnitSeleniumDownloader(1000);
             case PHANTOMJS:
                 return new PhantomJSDownloader(config.getPhantomJs());
             default:

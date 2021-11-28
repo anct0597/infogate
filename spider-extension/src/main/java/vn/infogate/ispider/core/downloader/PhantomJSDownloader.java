@@ -24,7 +24,7 @@ public class PhantomJSDownloader extends AbstractDownloader {
     private static String phantomJsCommand = "spider-web/phantomjs/bin/phantomjs.exe"; // default
 
     public PhantomJSDownloader() {
-        this.crawlJsPath = "spider-web/config/crawl.js";// default
+        this.crawlJsPath = "spider-web/js/crawl.js";// default
     }
 
     public PhantomJSDownloader(String crawlJsPath) {

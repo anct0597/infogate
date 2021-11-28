@@ -91,15 +91,6 @@ public class Page {
         return json;
     }
 
-    /**
-     * @param html html
-     * @deprecated since 0.4.0
-     * The html is parse just when first time of calling {@link #getHtml()}, so use {@link #setRawText(String)} instead.
-     */
-    public void setHtml(Html html) {
-        this.html = html;
-    }
-
     public List<Request> getTargetRequests() {
         return targetRequests;
     }

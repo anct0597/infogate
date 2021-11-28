@@ -1,5 +1,6 @@
 package vn.infogate.ispider.core.downloader;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
@@ -14,42 +15,34 @@ import vn.infogate.ispider.core.selector.PlainText;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.util.Map;
 
 @Slf4j
-public class SeleniumDownloader implements Downloader, Closeable {
+@NoArgsConstructor
+public class HtmlUnitSeleniumDownloader implements Downloader, Closeable {
 
     private volatile WebDriverPool webDriverPool;
 
     private int sleepTime = 0;
-
     private int poolSize = 1;
 
-    private static final String DRIVER_PHANTOMJS = "phantomjs";
-
-    public SeleniumDownloader(String chromeDriverPath) {
-        System.getProperties().setProperty("webdriver.chrome.driver", chromeDriverPath);
+    public HtmlUnitSeleniumDownloader(int sleepTime) {
+        this.sleepTime = sleepTime;
     }
 
-    /**
-     * set sleep time to wait until load success
-     *
-     * @param sleepTime sleepTime
-     * @return this
-     */
-    public SeleniumDownloader setSleepTime(int sleepTime) {
+    public HtmlUnitSeleniumDownloader(int sleepTime, int poolSize) {
         this.sleepTime = sleepTime;
-        return this;
+        this.poolSize = poolSize;
     }
 
     @Override
     public Page download(Request request, Task task) {
-        checkInit();
+        checkWebDriverPool();
         WebDriver webDriver;
         try {
             webDriver = webDriverPool.get();
         } catch (InterruptedException e) {
-            log.warn("interrupted", e);
+            Thread.currentThread().interrupt();
+            log.error("interrupted", e);
             return null;
         }
         log.info("downloading page " + request.getUrl());
@@ -57,15 +50,14 @@ public class SeleniumDownloader implements Downloader, Closeable {
         try {
             Thread.sleep(sleepTime);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Thread.currentThread().interrupt();
+            log.error("interrupted", e);
         }
         WebDriver.Options manage = webDriver.manage();
         Site site = task.getSite();
         if (site.getCookies() != null) {
-            for (Map.Entry<String, String> cookieEntry : site.getCookies()
-                    .entrySet()) {
-                Cookie cookie = new Cookie(cookieEntry.getKey(),
-                        cookieEntry.getValue());
+            for (var cookieEntry : site.getCookies().entrySet()) {
+                var cookie = new Cookie(cookieEntry.getKey(), cookieEntry.getValue());
                 manage.addCookie(cookie);
             }
         }
@@ -87,7 +79,7 @@ public class SeleniumDownloader implements Downloader, Closeable {
         return page;
     }
 
-    private void checkInit() {
+    private void checkWebDriverPool() {
         if (webDriverPool == null) {
             synchronized (this) {
                 webDriverPool = new WebDriverPool(poolSize);
