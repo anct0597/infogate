@@ -2,9 +2,9 @@ package vn.infogate.ispider.extension;
 
 import vn.infogate.ispider.core.Site;
 import vn.infogate.ispider.core.Spider;
-import vn.infogate.ispider.core.model.ModelPageProcessor;
-import vn.infogate.ispider.core.pipeline.ModelPipeline;
-import vn.infogate.ispider.core.pipeline.PageModelPipeline;
+import vn.infogate.ispider.extension.model.ModelPageProcessor;
+import vn.infogate.ispider.extension.pipeline.ModelPipeline;
+import vn.infogate.ispider.extension.pipeline.PageModelPipeline;
 
 /**
  * @author anct.

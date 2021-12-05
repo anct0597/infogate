@@ -7,6 +7,7 @@
  * W3: https://alonhadat.com.vn {@link vn.infogate.ispider.web.w3.W3PageProcessor}
  * W4: https://nha.chotot.com {@link vn.infogate.ispider.web.w4.W4PageProcessor}
  * W5: https://muaban.net {@link vn.infogate.ispider.web.w5.W5PageProcessor}
+ * W6: batdongsan.vn {@link vn.infogate.ispider.web.w6.W6PageProcessor}
  *
  *
  *

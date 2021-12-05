@@ -12,7 +12,11 @@ import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.DefaultHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.impl.client.*;
+import org.apache.http.impl.client.BasicCookieStore;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import vn.infogate.ispider.core.Site;
@@ -48,9 +52,9 @@ public class HttpClientGenerator {
             SSLContext sslContext = createIgnoreVerifySSL();
             String[] supportedProtocols;
             if (SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_11)) {
-                supportedProtocols = new String[] { "SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2", "TLSv1.3" };
+                supportedProtocols = new String[]{"SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2", "TLSv1.3"};
             } else {
-                supportedProtocols = new String[] { "SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2" };
+                supportedProtocols = new String[]{"SSLv3", "TLSv1", "TLSv1.1", "TLSv1.2"};
             }
             log.debug("supportedProtocols: {}", String.join(", ", supportedProtocols));
             return new SSLConnectionSocketFactory(sslContext, supportedProtocols,
@@ -60,7 +64,7 @@ public class HttpClientGenerator {
             log.error("ssl connection fail", e);
         }
         return SSLConnectionSocketFactory.getSocketFactory();
-	}
+    }
 
     private SSLContext createIgnoreVerifySSL() throws NoSuchAlgorithmException, KeyManagementException {
         X509TrustManager trustManager = new X509TrustManager() {
@@ -81,9 +85,9 @@ public class HttpClientGenerator {
         };
 
         SSLContext sc = SSLContext.getInstance("TLS");
-        sc.init(null, new TrustManager[] { trustManager }, null);
+        sc.init(null, new TrustManager[]{trustManager}, null);
         return sc;
-	}
+    }
 
     public void setPoolSize(int poolSize) {
         connectionManager.setMaxTotal(poolSize);

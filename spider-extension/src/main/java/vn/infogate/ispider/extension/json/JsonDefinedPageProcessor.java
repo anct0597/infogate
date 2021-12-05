@@ -6,9 +6,9 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import vn.infogate.ispider.core.Page;
 import vn.infogate.ispider.core.Request;
-import vn.infogate.ispider.core.model.Extractor;
 import vn.infogate.ispider.core.processor.PageProcessor;
-import vn.infogate.ispider.core.utils.ExtractorUtils;
+import vn.infogate.ispider.extension.model.Extractor;
+import vn.infogate.ispider.extension.utils.ExtractorUtils;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
-import vn.infogate.ispider.core.model.Extractor;
+import vn.infogate.ispider.extension.model.Extractor;
 
 /**
  * @author anct

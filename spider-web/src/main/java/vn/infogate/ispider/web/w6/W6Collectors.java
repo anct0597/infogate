@@ -1,7 +1,6 @@
-package vn.infogate.ispider.web.w4;
+package vn.infogate.ispider.web.w6;
 
-import org.jsoup.Jsoup;
-import vn.infogate.ispider.core.selector.JsonPathSelector;
+import vn.infogate.ispider.common.normalizer.TextNormalizer;
 import vn.infogate.ispider.extension.json.JsonFieldCollector;
 import vn.infogate.ispider.storage.model.document.PropertyInfoConstants;
 import vn.infogate.ispider.storage.model.entity.LocationModel;
@@ -15,12 +14,15 @@ import vn.infogate.ispider.storage.model.types.PublisherType;
 import vn.infogate.ispider.storage.model.types.Regex;
 import vn.infogate.ispider.web.collectors.CommonCollectors;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * @author anct.
  */
-public enum W4Collectors implements JsonFieldCollector {
+public enum W6Collectors implements JsonFieldCollector {
 
     AREA {
         @Override
@@ -152,10 +154,23 @@ public enum W4Collectors implements JsonFieldCollector {
         }
     },
     IMAGES {
+
+        private final Pattern PATTERN = Pattern.compile("varimageUrls=([\\w:\\-\\.\\/\\/\\/,]+)*");
+
         @Override
         public List<String> collect(Object raw) {
-            var replacedText =  Jsoup.parse(String.valueOf(raw)).data();
-            return new JsonPathSelector("$..ad.images").selectList(replacedText);
+            var text = TextNormalizer.removeWhitespace(String.valueOf(raw));
+            text = TextNormalizer.removeQuote(text);
+            text = TextNormalizer.removeBracket(text);
+
+            var matcher = PATTERN.matcher(text);
+
+            var images = new ArrayList<String>(10);
+            if (matcher.find()) {
+                var imageGroup = matcher.group(1);
+                images.addAll(Arrays.asList(imageGroup.split(",")));
+            }
+            return images;
         }
 
         @Override

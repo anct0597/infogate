@@ -5,7 +5,12 @@ import vn.infogate.ispider.extension.json.JsonFieldCollector;
 import vn.infogate.ispider.storage.model.document.PropertyInfoConstants;
 import vn.infogate.ispider.storage.model.entity.LocationModel;
 import vn.infogate.ispider.storage.model.entity.PriceModel;
-import vn.infogate.ispider.storage.model.types.*;
+import vn.infogate.ispider.storage.model.types.AreaUnit;
+import vn.infogate.ispider.storage.model.types.PropertyLegalStatus;
+import vn.infogate.ispider.storage.model.types.PropertyType;
+import vn.infogate.ispider.storage.model.types.PublishType;
+import vn.infogate.ispider.storage.model.types.PublisherType;
+import vn.infogate.ispider.storage.model.types.Regex;
 import vn.infogate.ispider.web.collectors.CommonCollectors;
 
 import java.util.ArrayList;
@@ -28,39 +33,6 @@ public enum W5Collectors implements JsonFieldCollector {
         public Double collect(Object raw) {
             var matcher = Regex.AREA.matcher(String.valueOf(raw));
             return matcher.find() ? Double.parseDouble(matcher.group(1)) : 0.0;
-        }
-    },
-    LIVING_AREA {
-        @Override
-        public String extractFrom() {
-            return PropertyInfoConstants.LIVING_AREA;
-        }
-
-        @Override
-        public Double collect(Object raw) {
-            return CommonCollectors.extractAsDouble(raw);
-        }
-    },
-    WIDTH {
-        @Override
-        public String extractFrom() {
-            return PropertyInfoConstants.WIDTH;
-        }
-
-        @Override
-        public Double collect(Object raw) {
-            return CommonCollectors.extractAsDouble(raw);
-        }
-    },
-    LENGTH {
-        @Override
-        public String extractFrom() {
-            return PropertyInfoConstants.LENGTH;
-        }
-
-        @Override
-        public Double collect(Object raw) {
-            return CommonCollectors.extractAsDouble(raw);
         }
     },
     AREA_UNIT {
@@ -90,50 +62,6 @@ public enum W5Collectors implements JsonFieldCollector {
         @Override
         public String extractFrom() {
             return PropertyInfoConstants.PHONES;
-        }
-    },
-    BED_ROOM {
-        @Override
-        public Integer collect(Object raw) {
-            return CommonCollectors.extractAsInt(raw);
-        }
-
-        @Override
-        public String extractFrom() {
-            return PropertyInfoConstants.BED_ROOMS;
-        }
-    },
-    FLOORS {
-        @Override
-        public Integer collect(Object raw) {
-            return CommonCollectors.extractAsInt(raw);
-        }
-
-        @Override
-        public String extractFrom() {
-            return PropertyInfoConstants.FLOORS;
-        }
-    },
-    TOILETS {
-        @Override
-        public Integer collect(Object raw) {
-            return CommonCollectors.extractAsInt(raw);
-        }
-
-        @Override
-        public String extractFrom() {
-            return PropertyInfoConstants.TOILET;
-        }
-    },
-    DIRECTION {
-        @Override
-        public Integer collect(Object raw) {
-            return PropertyDirection.getCode(String.valueOf(raw));
-        }
-
-        @Override
-        public String extractFrom() {
-            return PropertyInfoConstants.DIRECTION;
         }
     },
     PRICE {

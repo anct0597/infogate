@@ -2,8 +2,8 @@ package vn.infogate.ispider.extension.json;
 
 import lombok.Getter;
 import lombok.Setter;
-import vn.infogate.ispider.core.model.Extractor;
 import vn.infogate.ispider.core.selector.Selector;
+import vn.infogate.ispider.extension.model.Extractor;
 
 /**
  * @author anct.

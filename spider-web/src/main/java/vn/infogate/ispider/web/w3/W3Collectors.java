@@ -4,7 +4,13 @@ import vn.infogate.ispider.extension.json.JsonFieldCollector;
 import vn.infogate.ispider.storage.model.document.PropertyInfoConstants;
 import vn.infogate.ispider.storage.model.entity.LocationModel;
 import vn.infogate.ispider.storage.model.entity.PriceModel;
-import vn.infogate.ispider.storage.model.types.*;
+import vn.infogate.ispider.storage.model.types.AreaUnit;
+import vn.infogate.ispider.storage.model.types.PropertyDirection;
+import vn.infogate.ispider.storage.model.types.PropertyLegalStatus;
+import vn.infogate.ispider.storage.model.types.PropertyType;
+import vn.infogate.ispider.storage.model.types.PublishType;
+import vn.infogate.ispider.storage.model.types.PublisherType;
+import vn.infogate.ispider.storage.model.types.Regex;
 import vn.infogate.ispider.web.collectors.CommonCollectors;
 
 import java.util.List;
