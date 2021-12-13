@@ -1,6 +1,6 @@
 {
   "thread": 1,
-  "status": 1,
+  "status": 0,
   "pageModel": {
     "targetUrls": [
       "https://muaban.net/ban-can-ho[\\w\\-/]+",

@@ -39,19 +39,33 @@ public class LocationUtils {
     public LocationModel detectLocation(String text) {
         for (var province : provinceMap.entrySet()) {
             if (text.contains(province.getValue()) || text.contains(getShortProvinceText(province.getValue()))) {
+                var formattedText = replace(text);
+
                 for (var location : locationMap.get(province.getKey())) {
-                    if (text.contains(location.getWard()) | text.contains(getShortWardText(location.getWard()))) {
+                    if (text.contains(location.getWard()) || checkContain(formattedText, getShortWardText(location.getWard()))) {
                         return location;
                     }
                 }
                 for (var location : locationMap.get(province.getKey())) {
-                    if (text.contains(location.getDistrict()) | text.contains(getShortWardText(location.getDistrict()))) {
+                    if (text.contains(location.getDistrict()) || checkContain(formattedText, getShortDistrict(location.getDistrict()))) {
                         return location;
                     }
                 }
             }
         }
         return new LocationModel();
+    }
+
+    private boolean checkContain(String text, String givenText) {
+        return text.contains(replace(givenText));
+    }
+
+    private String replace(String text) {
+        var formatText = text;
+        for (var i = 0; i < 10; i++) {
+            formatText = formatText.replace("0" + i, String.valueOf(i));
+        }
+        return formatText;
     }
 
     private String getShortDistrict(String wardText) {

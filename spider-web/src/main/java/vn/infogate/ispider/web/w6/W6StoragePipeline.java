@@ -24,7 +24,7 @@ public class W6StoragePipeline implements Pipeline {
         var propertyInfoDoc = PropertyInfoTransformer.toPropertyInfoDoc(
                 resultItems.getRequest().getUrl(),
                 resultItems.getFields());
-        log.debug("[batdongsan.vn] {}", propertyInfoDoc);
+        log.debug("[www.batdongsan.vn] {}", propertyInfoDoc);
         propertyInfoRepo.save(propertyInfoDoc);
     }
 }

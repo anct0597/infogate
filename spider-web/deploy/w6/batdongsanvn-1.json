@@ -1,0 +1,62 @@
+{
+  "thread": 1,
+  "status": 1,
+  "pageModel": {
+    "targetUrls": [
+      "http://www.batdongsan.vn/[\\w\\-/]+.html"
+    ],
+    "ignoreUrls": [],
+    "startUrls": [
+      "http://www.batdongsan.vn/chinh-chu-ban-nha-mat-ho-lo-goc-chi-voi-gia-9ty8-re-nhat-ha-noi-p669281.html"
+    ],
+    "pipelines": [
+      "vn.infogate.ispider.web.w6.W6ModelGatherPipeline",
+      "vn.infogate.ispider.web.w6.W6StoragePipeline"
+    ],
+    "pageProcessor": "vn.infogate.ispider.web.w6.W6PageProcessor",
+    "fields": [
+      {
+        "name": "title",
+        "expr": "//*[@class='P_Title1']/text()",
+        "required": true
+      },
+      {
+        "name": "phones",
+        "expr": "//div[@id='leftcontent']//*[@class='phone']/a/span/text()"
+      },
+      {
+        "name": "area",
+        "expr": "//div[@id='leftcontent']//*[@class='product-area']/text()"
+      },
+      {
+        "name": "bed_rooms",
+        "expr": "//div[@id='leftcontent']//*[@class='sophongngu']/span[2]/text()"
+      },
+      {
+        "name": "bath_rooms",
+        "expr": "//div[@id='leftcontent']//*[@class='sophongtam']/span[2]/text()"
+      },
+      {
+        "name": "direction",
+        "expr": "//div[@id='leftcontent']//*[@class='huongbancong']/span[2]/text()"
+      },
+      {
+        "name": "location",
+        "expr": "//div[@id='leftcontent']//*/[@class='PD_Thongso']/div/div[5]/span/text()"
+      },
+      {
+        "name": "total_price",
+        "expr": "//div[@id='leftcontent']//*/[@class='price_unit']/text()"
+      },
+      {
+        "name": "property_type",
+        "expr": "//div[@id='leftcontent']//*/[@class='details-warp']/div[2]/span/a/span/text()"
+      },
+      {
+        "name": "images",
+        "expr": "//div[@id='leftcontent']//*/[@class='box-banner-img']/a/@href",
+        "multi": true
+      }
+    ]
+  }
+}
